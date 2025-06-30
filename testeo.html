@@ -1,0 +1,334 @@
+<!doctype html >
+< html lang = "es" > 
+  < cabeza >
+    < meta charset = "UTF-8" > 
+    < meta name = "viewport" content = "ancho=ancho-del-dispositivo, escala-inicial=1.0" >  
+    <title>Infografía: Oca Divina</title>
+    < link rel = "preconectar" href = "https://fonts.googleapis.com" >  
+    < link rel = "preconnect" href = "https://fonts.gstatic.com" crossorigin >   
+    < link href = "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700 & display=swap" rel = "hoja de estilo" >  
+    < script src = " https://cdn.tailwindcss.com " > </script> 
+    < script src = " https://cdn.jsdelivr.net/npm/chart.js " > </script> 
+    < script src = " https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js " > </script> 
+    < estilo >
+      cuerpo{font-family:'Montserrat',sans-serif;fondo:#f1f5f9;color:#37474f;}
+      .typing-effect{overflow:hidden;border-right:2px solid #ffc107;white-space:nowrap;animation:typing 3s steps(40,end),blink-caret .75s step-end infinite;}
+      @keyframes escribiendo{desde{ancho:0}hasta{ancho:100%}}
+      @keyframes blink-caret{desde,hasta{color del borde:transparente}50%{color del borde:#ffc107}}
+      .chart-container{posición:relativa;ancho:100%;ancho máximo:450px;margen:automático;alto:320px;}
+      @media(ancho mínimo: 768px){.chart-container{alto: 350px;}}
+      .progress-bar{ancho:100%;alto:12px;fondo:gradiente-lineal(90deg,#e2e8f0 0%,#cbd5e0 100%);radio-del-borde:10px;desbordamiento:oculto;margen-inferior:1rem;posición:relativa;}
+      .progress-bar-inner{altura:100%;fondo:gradiente-lineal(90deg,#ffc107,#ff8f00,#e65100);tamaño-de-fondo:200% 100%;animación:progressGlow 2s entrada-salida gradual infinita;transición:ancho .8s cúbico-bezier(.25,.46,.45,.94);radio-del-borde:10px;}
+      @keyframes progressGlow{0%,100%{posición de fondo:0 0}50%{posición de fondo:100% 0}}
+      .stat-card{fondo:#fff;radio del borde:.75rem;relleno:1.5rem;alineación del texto:centro;sombra del cuadro:0 4px 6px -1px rgb(0 0 0 / .1),0 2px 4px -2px rgb(0 0 0 / .1);transición:transformación .3s facilidad,sombra del cuadro .3s facilidad;}
+      .stat-card:hover{transformar:translateY(-5px);sombra de caja:0 10px 15px -3px rgb(0 0 0 / .1),0 4px 6px -2px rgb(0 0 0 / .1);}
+      .ai-output-box{fondo:#e0f2f7;borde izquierdo:4px sólido #1a237e;relleno:1rem;margen superior:1rem;radio del borde:.5rem;color:#37474f;tamaño de fuente:.9rem;altura de línea:1.5;posición:relativa;}
+      .copy-btn{posición:absoluta;superior:.5rem;derecha:.5rem;fondo:#ffc107;color:#1a237e;borde:ninguno;radio del borde:.25rem;relleno:.25rem .5rem;tamaño de fuente:.8rem;cursor:puntero;transición:fondo .2s;}
+      .copy-btn:hover{fondo:#e65100;color:#fff;}
+      #particles-bg{posición:fija;superior:0;izquierda:0;ancho:100vw;alto:100vh;índice z:0;eventos de puntero:ninguno;}
+      .sequenced-element{opacidad:0;transformación:translaciónY(20px);transición:opacidad .8s salida fácil,transformación .8s salida fácil;}
+      .sequenced-element.is-visible{opacidad:1;transformación:translateY(0);}
+      .attribute-bar{fondo:gradiente lineal(90 grados,#e2e8f0 0%,#cbd5e0 100%);radio del borde:25px;desbordamiento:oculto;posición:relativa;sombra de caja:insertar 0 2px 4px rgba(0,0,0,.1);}
+      .flow-step:not(:last-child)::after{contenido:"";posición:absoluta;izquierda:50%;abajo:-2rem;transformar:translateX(-50%);ancho:2px;alto:2rem;fondo:#ffc107;}
+      .nav-arrows{mostrar:flexible;justificar-contenido:centro;espacio:1rem;margen-inferior:1rem;}
+      .nav-arrow-btn{fondo:gradiente lineal(145 grados,#1a237e 0%,#3f51b5 100%);color:#fff;borde:ninguno;radio del borde:50%;ancho:3rem;alto:3rem;tamaño de fuente:1.5rem;pantalla:flexible;elementos de alineación:centrado;contenido de justificación:centrado;cursor:puntero;transición:todos .3s cúbico-bezier(.4,0,.2,1);sombra de caja:0 4px 15px rgba(26,35,126,.3),recuadro 0 1px 0 rgba(255,255,255,.1);posición:relativa;desbordamiento:oculto;}
+      .nav-arrow-btn::before{contenido:"";posición:absoluta;superior:50%;izquierda:50%;ancho:0;alto:0;fondo:gradiente radial(círculo,rgba(255,193,7,.3) 0%,transparente 70%);transición:facilidad de .3s;radio del borde:50%;transformación:traducir(-50%,-50%);}
+      .nav-arrow-btn:hover::before{ancho:100px;alto:100px;}
+      .nav-arrow-btn:focus{contorno:2px sólido #ffc107;desplazamiento del contorno:2px;}
+      .nav-arrow-btn:hover{fondo:gradiente-lineal(145deg,#3f51b5 0%,#1a237e 100%);transformar:translateY(-2px) escala(1.05);sombra-cuadro:0 8px 25px rgba(26,35,126,.4),insertar 0 1px 0 rgba(255,255,255,.2);}
+      .nav-arrow-btn:active{transform:translateY(0) escala(.95);}
+      .restart-btn{fondo:gradiente lineal(145 grados,#ffc107 0%,#ffb300 100%);color:#1a237e;borde:ninguno;radio del borde:1rem;relleno:.75rem 2rem;peso de fuente:negrita;margen izquierdo:1rem;cursor:puntero;transición:todos .3s cúbico-bezier(.4,0,.2,1);sombra de caja:0 4px 15px rgba(255,193,7,.3),recuadro 0 1px 0 rgba(255,255,255,.2);posición:relativa;desbordamiento:oculto;}
+      .restart-btn::before{contenido:"";posición:absoluta;arriba:0;izquierda:-100%;ancho:100%;alto:100%;fondo:gradiente-lineal(90deg,transparente,rgba(255,255,255,.3),transparente);transición:izquierda .5s facilidad;}
+      .restart-btn:hover::before{izquierda:100%;}
+      .restart-btn:hover{fondo:gradiente-lineal(145deg,#ffb300 0%,#ff8f00 100%);color:#fff;transformar:translateY(-2px);sombra-cuadro:0 8px 25px rgba(255,193,7,.4),insertar 0 1px 0 rgba(255,255,255,.3);}
+      .dark-mode-toggle{posición:fija;superior:1rem;derecha:1rem;fondo:#37474f;color:#ffc107;borde:ninguno;radio del borde:1.5rem;relleno:.5rem 1.2rem;tamaño de fuente:1rem;cursor:puntero;índice z:100;transición:fondo .2s;}
+      .dark-mode-toggle:hover{fondo:#1a237e;color:#fff;}
+      cuerpo.modo oscuro.nav-flecha-btn{fondo:gradiente-lineal(145deg,#ffc107 0%,#ffb300 100%);color:#1a202c;sombra-caja:0 4px 15px rgba(255,193,7,.3);}
+      cuerpo.modo oscuro.nav-flecha-btn:hover{fondo:gradiente-lineal(145deg,#ffb300 0%,#ff8f00 100%);color:#fff;sombra-de-caja:0 6px 20px rgba(255,143,0,.4);}
+      cuerpo.modo oscuro.reinicio-btn{fondo:gradiente-lineal(145deg,#1a237e 0%,#3f51b5 100%);color:#ffd60a;sombra-de-caja:0 4px 15px rgba(26,35,126,.3);}
+      cuerpo.modo oscuro.reinicio-btn:hover{fondo:gradiente-lineal(145deg,#3f51b5 0%,#1a237e 100%);color:#fff;sombra-de-caja:0 6px 20px rgba(63,81,181,.4);}
+      cuerpo.modo oscuro.barra de progreso{fondo:#2d3748;borde:1px sólido #4a5568;}
+      cuerpo.modo oscuro.barra de progreso interior{fondo:gradiente lineal(90 grados,#ffd60a,#ffb300,#ff8f00);sombra de caja:0 0 15px rgba(255,214,10,.6),insertar 0 1px 0 rgba(255,255,255,.2);}
+      .tooltip{posición:relativa;cursor:ayuda;}
+      .tooltip::before{contenido:attr(data-tooltip);posición:absoluta;inferior:125%;izquierda:50%;transformar:translateX(-50%);fondo:gradiente-lineal(145deg,#1a237e 0%,#2d3748 100%);color:#ffd60a;relleno:.5rem 1rem;radio-del-borde:.5rem;tamaño-de-fuente:.875rem;espacio-en-blanco:nowrap;opacidad:0;visibilidad:oculta;transición:todos .3s cúbico-bezier(.4,0,.2,1);eventos-de-puntero:ninguno;sombra-de-cuadro:0 4px 20px rgba(0,0,0,.3);índice-z:1000;}
+      .tooltip::after{contenido:"";posición:absoluta;inferior:115%;izquierda:50%;transformación:translateX(-50%);borde:5px sólido transparente;color superior del borde:#1a237e;opacidad:0;visibilidad:oculta;transición:todos .3s cúbico-bezier(.4,0,.2,1);índice z:1000;}
+      .tooltip:hover::before,.tooltip:hover::after{opacidad:1;visibilidad:visible;transformar:translateX(-50%) translateY(-5px);}
+      cuerpo.modo oscuro.tooltip::antes{fondo:gradiente-lineal(145deg,#ffd60a 0%,#ffb300 100%);color:#1a237e;}
+      cuerpo.modo oscuro.tooltip::after{border-top-color:#ffd60a;}
+      .pulse-effect{animation:pulseGlow 2s entrada-salida gradual infinita;}
+      @keyframes pulseGlow{0%,100%{sombra de caja:0 0 5px rgba(255,193,7,.5);}50%{sombra de caja:0 0 20px rgba(255,193,7,.8),0 0 30px rgba(255,193,7,.4);}}
+      .parallax-element{archivo adjunto de fondo: fijo; posición de fondo: centro; repetición de fondo: sin repetición; tamaño de fondo: cubierta;}
+      .micro-bounce:hover{animación:microBounce .6s facilidad;}
+      @keyframes microBounce{0%,20%,50%,80%,100%{transformar:translateY(0);}40%{transformar:translateY(-10px);}60%{transformar:translateY(-5px);}}
+      .glass-effect{fondo:rgba(255,255,255,.1);filtro-de-fondo:desenfoque(10px) saturación(180%);borde:1px sólido rgba(255,255,255,.2);sombra-de-caja:0 8px 32px rgba(0,0,0,.1);}
+      .attribute-bar-fill{fondo:gradiente-lineal(90deg,#ffd60a 0%,#ff8f00 50%,#ff6f00 100%);altura:100%;radio-del-borde:25px;posición:relativa;transición:ancho 1.5s cúbico-bezier(.25,.46,.45,.94);sombra-de-caja:0 2px 8px rgba(255,214,10,.3),recuadro 0 1px 0 rgba(255,255,255,.3);}
+      .contenedor-de-botella-de-vino{perspectiva:1000px;pantalla:flexible;justificar-contenido:centrar;alinear-elementos:centrar;}
+      .wine-bottle{transición:transformación .5s facilidad;filtro:sombra paralela(0 10px 30px rgba(0,0,0,.3));}
+      .botella-de-vino:hover{transformar:rotarY(15deg) escala(1.05);filtro:sombra-paralela(0 15px 40px rgba(255,193,7,.3));}
+      .bottle-body{transición:filter .3s facilidad;}
+      .botella-de-vino:hover .cuerpo-de-botella{filtro:brillo(1.1);}
+      cuerpo.modo oscuro .botella de vino{filtro:sombra paralela(0 10px 30px rgba(255,214,10,.2));}
+      cuerpo.modo oscuro.botella de vino:hover{filtro:sombra paralela(0 15px 40px rgba(255,214,10,.4));}
+      .attribute-bar-fill::after{contenido:"";posición:absoluta;superior:0;derecha:-50px;ancho:50px;alto:100%;fondo:gradiente-lineal(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.6) 50%,rgba(255,255,255,0) 100%);animación:brillo 2s infinito;}
+      @keyframes shimmer{0%{transform:translateX(-100px)}100%{transform:translateX(300px)}}
+      cuerpo.modo oscuro{fondo:gradiente lineal(135deg,#0f1419 0%,#1a202c 25%,#2d3748 50%,#1a202c 75%,#0f1419 100%);tamaño de fondo:400% 400%;animación:gradienteDesplazamiento 15s facilidad infinita;color:#e2e8f0;posición:relativa;}
+      @keyframes gradientShift{0%{posición de fondo:0% 50%}50%{posición de fondo:100% 50%}100%{posición de fondo:0% 50%}}
+      cuerpo.modo oscuro.tarjeta estadística{fondo:rgba(45,55,72,.7);filtro de fondo:desenfoque(20px) saturación(180%);borde:1px sólido rgba(255,193,7,.2);sombra de caja:0 8px 32px rgba(0,0,0,.4),recuadro 0 1px 0 rgba(255,255,255,.1),0 0 0 1px rgba(255,193,7,.1);color:#e2e8f0;}
+      cuerpo.modo oscuro.tarjeta estadística:hover{fondo:rgba(74,85,104,.8);color del borde:rgba(255,193,7,.4);sombra del cuadro:0 12px 40px rgba(255,193,7,.3),recuadro 0 1px 0 rgba(255,255,255,.15),0 0 0 1px rgba(255,193,7,.2);transformar:translateY(-8px) escala(1.02);}
+      cuerpo.modo oscuro.barra de progreso{fondo:#2d3748;borde:1px sólido #4a5568;}
+      cuerpo.modo oscuro.barra de atributo{fondo:gradiente lineal(90deg,#2d3748 0%,#4a5568 100%);}
+      cuerpo.modo oscuro.atributo-barra-relleno{fondo:gradiente-lineal(90deg,#ffd60a 0%,#ffb300 50%,#ff8f00 100%);}
+      cuerpo.modo oscuro.ai-output-box{fondo:gradiente lineal(145deg,#1a202c 0%,#2d3748 100%);color:#ffd60a;borde izquierdo:4px sólido #ffd60a;sombra de caja:0 4px 20px rgba(255,214,10,.1);}
+      @keyframes fire-flicker{0%{filtro:brillo(1.2) sombra paralela(0 0 4px #ff9800);}50%{filtro:brillo(1.6) sombra paralela(0 0 12px #ff9800);}100%{filtro:brillo(1.2) sombra paralela(0 0 4px #ff9800);}}
+      @keyframes cork-pop{0%{transform:translateY(0);}30%{transform:translateY(-20px) rotate(-10deg);}60%{transform:translateY(0) rotate(0);}100%{transform:translateY(0);}}
+      @keyframes sun-spin{0%{transform:rotate(0);}100%{transform:rotate(360deg);}}
+      @keyframes bubble{0%{transform:translateY(0) escala(1);opacidad:1;}50%{transform:translateY(-10px) escala(1.1);opacidad:.7;}100%{transform:translateY(0) escala(1);opacidad:1;}}
+      .fire-emoji{animación:fire-flicker 1s infinito;}
+      .cork-emoji{animación:cork-pop 1,5 s infinito;}
+      .sun-emoji{animación:sun-spin 4s lineal infinito;}
+      .bubble-emoji{animación:burbuja 2s infinita;}
+    </ estilo >
+  </ cabeza >
+  < cuerpo >
+    < canvas id = "partículas-bg" > </ canvas > 
+    < button id = "darkModeToggle" class = "fixed top-2 right-2 bg-gray-700 text-yellow-400 px-3 py-1 rounded" aria-label = "Alternar modo claro/oscuro" > 🌙 </ button >   
+    < clase principal = "relativo z-10" rol = "principal" >  
+      < div class = "barra-de-progreso" aria-label = "Progreso" > < div id = "barra-de-progreso-interior" class = "barra-de-progreso-interior" style = "ancho:0%" > </ div > </ div >     
+      <divclass="flex justify-center gap-4 mb-4"aria-label="Navegación">  
+        < button id = "flechaIzquierda" class = "nav-arrow-btn" aria-label = "Anterior" > ← </ button >   
+        < button id = "flechaDerecha" class = "nav-arrow-btn" aria-label = "Siguiente" > → </ button >   
+        Reiniciar​​​​​​​​​​​​​​​   
+      </div>​​
+      < encabezado clase = "text-center mb-12 md:mb-16" > 
+        Oca Divina​​​​​​​​ 
+        <pclass="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto sequenced-element typing-effect">Un vino innovador de los Andes peruanos que fusiona tradición y modernidad.</p> 
+        < div class = "w-full flex justify-center mt-4 sequenced-element wine-bottle-container" > 
+          < clase SVG = "botella de vino" ancho = "80" alto = "120" viewBox = "0 0 80 120" xmlns = "http://www.w3.org/2000/svg" >     
+            < defs >
+              < gradientelineal id = "gradientebotella" x1 = "0%" y1 = "0%" x2 = "100%" y2 = "100%" >     
+                < desplazamiento de parada = "0%" estilo = "color de parada:#2a5c2a;opacidad de parada:1" />  
+                < desplazamiento de parada = "50%" estilo = "color de parada:#1a4a1a;opacidad de parada:1" />  
+                < desplazamiento de parada = "100%" estilo = "color de parada: #0f2f0f;opacidad de parada: 1" />  
+              </gradientelineal>​​
+              < gradientelineal id = "gradientevino" x1 = "0%" y1 = "0%" x2 = "100%" y2 = "100%" >     
+                < desplazamiento de parada = "0%" estilo = "color de parada: #8b0000;opacidad de parada: 0.9" />  
+                < desplazamiento de parada = "50%" estilo = "color de parada:#dc143c;opacidad de parada:0.8" />  
+                < desplazamiento de parada = "100%" estilo = "color de parada:#b22222;opacidad de parada:0.9" />  
+              </gradientelineal>​​
+              < gradiente lineal id = "gradienteetiqueta" x1 = "0%" y1 = "0%" x2 = "100%" y2 = "100%" >     
+                < desplazamiento de parada = "0%" estilo = "color de parada:#ffc107;opacidad de parada:1" />  
+                < desplazamiento de parada = "100%" estilo = "color de parada:#ffb300;opacidad de parada:1" />  
+              </gradientelineal>​​
+            </defs>​​
+            < rect x = "25" y = "35" ancho = "30" alto = "75" rx = "3" relleno = "url(#bottleGradient)" clase = "bottle-body" />       
+            < rect x = "32" y = "20" ancho = "16" alto = "20" relleno = "url(#bottleGradient)" />     
+            < rect x = "27" y = "40" ancho = "26" alto = "65" rx = "2" relleno = "url(#wineGradient)" opacidad = "0.8" />       
+            < rect x = "28" y = "55" ancho = "24" alto = "20" rx = "2" relleno = "url(#labelGradient)" />      
+            < texto x = "40" y = "62" ancla-texto = "medio" tamaño-fuente = "6" peso-fuente = "negrita" relleno = "#1A237E" > OCA </ texto >      
+            DIVINA​​​​​​​​​​​​​​​​​​​​​     
+            < rect x = "33" y = "15" ancho = "14" alto = "8" rx = "1" relleno = "#8B4513" />      
+            < rect x = "30" y = "25" ancho = "3" alto = "70" rx = "1.5" relleno = "rgba(255,255,255,0.3)" opacidad = "0.6" />       
+            < elipse cx = "40" cy = "115" rx = "20" ry = "3" relleno = "rgba(0,0,0,0.2)" />     
+          </svg>​​
+        </div>​​
+        Descargar PDF​​​​​​​​​​​  
+      </ encabezado >
+      < sección clase = "mb-12 md:mb-16" > 
+        El Pulso del Mercado​​​​​​ 
+        <pclass="text-center max-w-2xl mx-auto mb-10 sequenced-element">Los datos de la encuesta revelan un fuerte interés del consumidor, validando la propuesta de valor del producto.</p> 
+        < div class = "cuadrícula cuadrícula-columnas-1 md:cuadrícula-columnas-2 lg:cuadrícula-columnas-3 espacio-8 elementos-centro" > 
+          < div class = "stat-card sequenced-element" > 
+            < div class = "text-7xl font-bold text-orange-700 animated-number" data -target-value = "87" data -is-percentage = "true" > 0% </div>   
+            <pclass="text-xl mt-2">manifestó su intención de comprar el producto.</p> 
+          </div>​​
+          < div class = "stat-card grid grid-cols-1 sm:grid-cols-2 gap-8 sequenced-element" data-chart-id = "ageChart,innovationChart" >  
+            <div>​​
+              Público objetivo​​​​​​​​ 
+              < div class = "chart-container" > < canvas id = "ageChart" > </ canvas > </ div >  
+            </div>​​
+            <div>​​
+              <h3class="text-xl font-semibold mb-4 text-indigo-900">Percepción de Innovación</h3> 
+              < div class = " chart - container" > < canvas id = " innovationChart" > </canvas> </div>  
+            </div>​​
+          </div>​​
+          < div class = "stat-card md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-8 sequenced-element" data-chart-id = "priceChart" >  
+            <div>​​
+              <h3class="text-xl font-semibold mb-4 text-indigo-900">Precio Sugerido</h3> 
+              < div class = " chart -container" > < canvas id = " priceChart " > </canvas> </div>  
+            </div>​​
+            <div>​​
+              Atributos valiosos​​​​​​​​ 
+              <pclass="text-sm mb-4">Autenticidad del sabor y origen del producto.</p> 
+              < div class = "espacio-y-4 texto-izquierda" > 
+                < div class = "attribute-bar h-8 relative" > < div class = "attribute-bar-fill text-xs font-bold text-white text-center lead-8" style = " width : 0%" data -width = "95" > 🍇 Sabor auténtico </div> </div>    
+                < div class = "attribute-bar h-8 relative" > < div class = "attribute-bar-fill text-xs font-bold text-white text-center lead-8" style = " width :0%" data -width = "85" > 🌿 Origen natural </div> </div>    
+                < div class = "attribute-bar h-8 relative" > < div class = "attribute-bar-fill text-xs font-bold text-white text-center lead-8" style = " width :0%" data-width = " 70" > 💚 Beneficios </div> </div>    
+                < div class = "attribute-bar h-8 relative" > < div class = "attribute-bar-fill text-xs font-bold text-white text-center lead-8" style = " width : 0%" data-width = "60" > 🎨 Producción artesanal </div> </div>    
+              </div>​​
+            </div>​​
+          </div>​​
+        </div>​​
+      </ sección >
+      < sección clase = "mb-12 md:mb-16" > 
+        El Plan Financiero​​​​​​​ 
+        <pclass="text-center max-w-2xl mx-auto mb-10 sequenced-element">Análisis detallado de los costos por lote (500 litros) revela una estructura manejable y un camino claro hacia la rentabilidad.</p> 
+        < div class = "grid grid-cols-1 md:grid-cols-2 gap-8 items-center" > 
+          < div class = "stat-card sequenced-element" data-chart-id = "costChart" >  
+            <h3class="text-xl font-semibold mb-4 text-indigo-900">Desglose del Costo por Botella</h3> 
+            < div class = " chart -container" > < canvas id = " costChart " > </canvas> </div>  
+            < button id = "costInsightBtn" class = "mt-4 px-4 py-2 bg-orange-700 text-white font-bold rounded hover:bg-orange-600 transition-colors" > Información de costos ✨ </ button >  
+            < div id = "costInsightOutput" class = "ai-output-box oculto" > </ div >  
+            Cargando ...​​​​​​​​​​​  
+          </div>​​
+          < div clase = "espacio-y-6" > 
+            < div class = "stat-card sequenced-element" > 
+              < div class = "text-4xl font-bold text-orange-700 animated-number" data - target-value = "9094" data-prefix = "S/" > S/ 0.00 </div>   
+              <pclass="text-lg mt-2">Costo Total Estimado por Lote</p> 
+            </div>​​
+            < div class = "stat-card sequenced-element" > 
+              < div class = "text-4xl font-bold text-orange-700 animated-number" data - target-value = "18.19" data-prefix = "S/" > S/ 0.00 </div>   
+              <pclass="text-lg mt-2">Costo por Litro Producido</p> 
+            </div>​​
+          </div>​​
+        </div>​​
+      </ sección >
+      < sección clase = "mb-12 md:mb-16" > 
+        Indicadores Clave​​​​​​​​ 
+        <pclass="text-center max-w-2xl mx-auto mb-10 sequenced-element">La productividad es la medida de nuestra optimización.</p> 
+        < div class = "cuadrícula columnas-cuadrícula-1 sm:cuadrícula columnas-cuadrícula-2 lg:cuadrícula columnas-cuadrícula-4 espacio-6" > 
+          < div class = "stat-card sequenced-element" > < div class = "text-4xl font-bold text-indigo-900 animated-number"> data-target-value = "3.30"> data -prefix = " S/" > S/ 0.00 </div> < p class = "text - md mt-2" > Generados por cada S / 1 invertido. </p> </div>     
+          < div class = "stat-card sequenced-element" > < div class = "text-4xl font-bold text-indigo-900 animated-number"> data-target-value = "16.68"> data -prefix = "S/" > S / 0.00 </div> < p class = " text-md mt-2" > Por cada S / 1 en mano de obra. </p> </div>     
+          < div class = "stat-card sequenced-element" > < div class = "text-4xl font-bold text-indigo-900 animated-number"> data-target-value = "12"> data -prefix = "S/" > S/ 0.00 </div> < p class = "text- md mt-2" > Por cada S / 1 en oca. </p> </div>     
+          < div class = "stat-card sequenced-element" > < div class = "text-4xl font-bold text-indigo-900 animated-number"> data-target-value = "5" data-suffix = " L" > 0 L </div> < p class = " text-md mt-2" > Litros por hora de trabajo . </p> </div>     
+        </div>​​
+      </ sección >
+      < sección clase = "mb-12 md:mb-16" > 
+        De los Andes a la Botella​​​​ 
+        < div class = "cuadrícula relativa cuadrícula-columnas-2 md:cuadrícula-columnas-3 lg:cuadrícula-columnas-5 espacio-8" > 
+          Recepción y selección​​​​​​​​​​​​​​​​​​​​​​​​​​​​​    
+          Curado al sol​​​​​​​​​​​​​​​​​​​​​​​​​​​​​    
+          < div class = "relative flex flex-col items-center flow-step sequenced-element" > < div class = "w-16 h-16 rounded-full bg - yellow-500 flex items-center justify-center text-2xl text-white mb-3 fire-emoji"> aria - hidden = " true " > 🔥 </div> < p class = " font -semibold text-center" > Cocción y Prensado </p> </div>    
+          < div class = "relative flex flex-col items-center flow-step sequenced-element" > < div class = "w-16 h-16 rounded-full bg - yellow-500 flex items-center justify -center text-2xl text-white mb-3 bubble-emoji"> aria - hidden = " true" > ⚗️ </div> < p class = " font -semibold text-center" > Fermentación </p> </div>    
+          Embotellado​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​    
+        </div>​​
+      </ sección >
+      < sección >
+        Las 4 P​​​​​​​ 
+        < div class = "cuadrícula columnas-cuadrícula-1 md:cuadrícula columnas-cuadrícula-2 lg:cuadrícula columnas-cuadrícula-4 espacio-6" > 
+          < div class = "stat-card sequenced-element" > < h3 class = "text-2xl font-bold mb-3 text-orange-700" > Producto </ h3 > < ul class = "list-disc list-inside space-y-2" > < li > Vino de oca innovador </ li > < li > Sabor único </ li > < li > Origen andino </ li > < li > Presentación 750ml </ li > </ ul > </ div >   
+          < div class = "stat-card sequenced-element" > < h3 class = "text-2xl font-bold mb-3 text-orange-700" > Precio </ h3 > < ul class = "list-disc list-inside space-y-2" > < li > Estrategia Premium </ li > < li > Costo de la botella: S/ 13.63 </ li > < li > PvP: S/ 45-55 </ li > < li > Márgenes saludables </ li > </ ul > </ div >   
+          < div class = "stat-card sequenced-element" > < h3 class = "text-2xl font-bold mb-3 text- orange - 700 " > Plaza < / h3 " > < ul class = " list - disc list - inside space - y - 2 " > <li> Tiendas gourmet </li> <li> HoReCa </li> <li> Comercio electrónico </li> <li> Supermercados </li> </ul> </div>   
+          Promoción </h3> <ul> clase - disc > list - inside - space - y - 2 > <li> Storytelling </li> <li> Marketing Digital </li> <li> Alianzas con chefs </li> <li> Catálogos </li> ul > </div>​​​​​​​​​​​​​​​​​​​​​   
+        </div>​​
+      </ sección >
+    Usa ← → para navegar . Desliza en el móvil . 
+    </ principal >
+    < footer class = "text-center p-6 mt-12 bg-indigo-900 text-white" > < p > © 2025 ANDINA SPIRITUS SAC - Proyecto "Oca Divina". </ p > </ footer > 
+    < script >
+      constante PALETA =[ '#FFC107' , '#E65100' , '#1A237E' , '#FF7043' , '#FFA000' ];
+ 
+      constante FONT_COLOR = '#37474F' ;
+ 
+      deje que chartInstances={};
+      const defaultOptions={ responsive : true , maintainAspectRatio : false , plugins :{ legend :{ position : 'bottom' , labels :{ color : FONT_COLOR , font :{ size : 12 }}}, tooltip :{ callbacks : { title : ( items )=> Array.isArray (items[ 0 ] .label )?items[ 0 ] .label.join ( ' ' ) : items[ 0 ].label } } }, color : FONT_COLOR }
+ ;
+      constante chartConfigs={
+        ageChart:{type:'doughnut',data:{labels:['23-30 años','31-40 años','18-22 años','41-50 años','51+ años'],datasets:[{label:'Distribución por Edad',data:[38,27,20,11,4],backgroundColor:PALETTE,borderColor:'#FFFFFF',borderWidth:2}]},options:{...defaultOptions}},
+        innovaciónChart :{ tipo : 'bar' , datos :{ etiquetas :[ 'Muy innovador' , 'Bastante' , 'Medianamente' , 'Poco' , 'Nada' ], conjuntos de datos :[{ etiqueta : '% de Encuestados' , datos :[ 45 , 32 , 21 , 1 , 1 ], backgroundColor : PALETA [ 0 ], borderColor : PALETA [ 1 ], borderWidth : 1 }]}, opciones :{...defaultOptions, indexAxis : 'y' , escalas :{ x :{ grid :{ borderColor : '#E5E7EB' , color : '#E5E7EB' }, ticks :{ color : FONT_COLOR }}, y :{ grid :{ display : false , borderColor : '#E5E7EB' }, ticks :{ color : FONT_COLOR }}}, plugins :{ leyenda :{ display : false }}}},
+        priceChart :{ type : 'donut' , data :{ labels :[ 'S/ 40-60' , 'Menos de S/ 40' , 'S/ 60-80' , 'Más de S/ 80' ], datasets :[{ label : 'Precio sugerido' , data :[ 49 , 35 , 12 , 4 ], backgroundColor : PALETTE , borderColor : '#FFFFFF' , borderWidth : 2 }]}, options :{...defaultOptions}},
+        costChart :{ type : 'doughnut' , data :{ labels :[ 'Empaques' , 'Materia Prima' , 'Mano de Obra' , 'CIF' , 'Operativos' ], datasets :[{ label : 'Costo por Botella' , data :[ 29.5 , 26.1 , 18 , 14.3 , 3 ], backgroundColor : PALETTE . slice ( 0 , 5 ). reverse (), borderColor : '#FFFFFF' , borderWidth : 2 }]}, options :{...defaultOptions, plugins :{ tooltip :{ callbacks :{ label : ( ctx )=> ` ${ctx.dataset.label|| '' } : ${ctx.parsed.toFixed( 1 )} %` }}}}}
+      };
+      función initChart ( id ) { si (!chartInstances[id]&&chartConfigs[id]){ const ctx= document.getElementById (id) .getContext ( '2d' );chartInstances[id]= new Chart ( ctx,chartConfigs[id]);} de lo contrario si (chartInstances[id]){chartInstances[id] .update ();}}
+   
+      función destroyChart ( id ){ if (chartInstances[id]){chartInstances[id].destroy ( ); eliminar chartInstances[id];}}
+ 
+      const sequencedElements=[... document.querySelectorAll ( 'encabezado p,sección h2,sección p,sección.stat-card,sección.flow-step' ) ] ;
+      deje que currentElementIndex=- 1 ;
+      sequencedElements.forEach ( el = > el.classList.add ( 'elemento-secuenciado ' ) ) ;
+      función animateNumber ( el,objetivo,esPorcentaje,prefijo= '' ,sufijo= '' ){ let start= 0 ; const startTime=performance.now (); función step ( t ) { const progress = Math.min ( (t-startTime)/ 1500 , 1 ); const value=start+(objetivo-inicio)*progreso;el.textContent = esPorcentaje? ` ${ Math.floor (valor)} %` : ` ${prefijo} ${valor.toFixed( 2 )} ${sufijo} ` ; if (progreso< 1 ) requestAnimationFrame (paso);} requestAnimationFrame (paso);}
+  
+      función animateAttributeBars ( ) { documento . querySelectorAll ( '. atributo-barra-relleno' ). forEach ( barra => { const ancho=barra. dataset . ancho ;barra. estilo . ancho = ancho? ` ${ancho} %` : '0%' ;});}
+ 
+      función revelar ( el ){el. classList . add ( 'is-visible' ); si (el. querySelector ( '. animado-numero' )){ const num=el. querySelector ( '. animado-numero' ); animateNumber (num, parseFloat (num. dataset . targetValue ),num. dataset . isPercentage === 'true' ,num. dataset . prefijo || '' ,num. dataset . sufijo || '' );} const chartIds=el. dataset . chartId ; si (chartIds)chartIds. split ( ',' ). forEach ( id => initChart (id. trim ())); si (el. querySelector ( '. atributo-barra-relleno' )) setTimeout (animateAttributeBars, 500 );}
+ 
+      función ocultar ( el ){el.classList.remove ( ' es-visible' ); si ( el.querySelector ( '.animated-number' )){ const num=el.querySelector ( '.animated-number' ); num.textContent = num.dataset.isPercentage === ' verdadero ' ? ' 0 %' : ` $ {num.dataset.prefix|| '' } 0.00 $ {num.dataset.suffix|| '' } ` ;} const chartIds=el.dataset.chartId ; si ( chartIds)chartIds.split ( ' ,' ) .forEach ( id => destroyChart (id.trim ())); si ( el.querySelector ( ' .attribute -bar-fill' ) ) document.querySelectorAll ( ' .attribute-bar-fill ' ) . para cada ( barra => barra. estilo . ancho = '0%' );}
+ 
+      función navegar ( dir ){ const next=currentElementIndex+(dir=== 'derecha' ? 1 :- 1 ); si (next< 0 ||next>=sequencedElements. length ) devolver ; si (dir=== 'derecha' ){ revelar (sequencedElements[next]);} de lo contrario { ocultar (sequencedElements[currentElementIndex]);}currentElementIndex=siguiente; updateProgressBar ();sequencedElements[currentElementIndex]. scrollIntoView ({ comportamiento : 'suave' , bloque : 'centro' });}
+ 
+      función updateProgressBar ( ) { const prog=((currentElementIndex+ 1 )/sequencedElements.length )* 100 ; documento.getElementById ( 'progressBarInner' ) . style.width = ` $ { prog } % ` ;}
+ 
+      documento . getElementById ( 'flechaIzquierda' ). addEventListener ( 'clic' , ()=> navegar ( 'izquierda' ));
+      documento . getElementById ( 'arrowRight' ). addEventListener ( 'click' , ()=> browse ( 'right' ));
+      documento . getElementById ( 'restartBtn' ). addEventListener ( 'click' , ()=> { if (currentElementIndex>= 0 ) hide (sequencedElements[currentElementIndex]);currentElementIndex=- 1 ; updateProgressBar (); ventana . scrollTo ({ top : 0 , comportamiento : 'suave' });});
+      documento .addEventListener ( 'keydown' , e => { if ( e.key === 'ArrowRight' ) browse ( 'derecha' ) ; else if ( e.key === 'ArrowLeft' ) browse ( 'izquierda' );});
+ 
+      documento.getElementById ( 'darkModeToggle' ) . addEventListener ( ' click' , ( )=> { documento.body.classList.toggle ( ' modo - oscuro ' ) ; localStorage.setItem ( 'darkMode' , documento.body.classList.contains ( ' modo - oscuro ' ) ) ; updateChartsForDarkMode ( documento.body.classList.contains ( ' modo - oscuro ' )
+ ) ; } ) ;
+      si ( localStorage . getItem ( 'darkMode' )=== 'true' ){ documento . body . classList . add ( 'dark-mode' );}
+      función updateChartsForDarkMode ( isDark ) { Object.values (chartInstances) .forEach ( chart => {chart.options.plugins.leyenda.etiquetas.color = isDark ? ' # FFC107 ' : COLOR_DE_FUENTE ; chart.options.scales && Object.values ( chart.options.scales ).forEach ( scale = > { scale.ticks.color = isDark ? ' #FFC107' :COLOR_DE_FUENTE;scale.grid.color = isDark ? ' # 37474f ' : ' # E5E7EB ' ; } ) ; chart.update ( );}
+ ) ; } 
+
+      documento.getElementById ( 'descargarPDF' ) . addEventListener ( ' clic' , ( )=> { html2pdf (). from ( documento.querySelector ( 'principal' )). save ( ' Infografia_OcaDivina.pdf' );});
+
+      llamada de función asíncrona GeminiAPI ( prompt,outputElementId,loadingElementId ){
+  
+        const outputDiv= document.getElementById (outputElementId
+ ) ;
+        const loadingDiv= document .getElementById ( loadingElementId );
+        outputDiv.classList.add ( ' oculto ' )
+ ;
+        loadingDiv.classList.remove ( ' oculto ' )
+ ;
+        intentar {
+          respuesta constante = esperar búsqueda ( 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=YOUR_GEMINI_API_KEY_HERE' ,{
+ 
+            método : 'POST' ,
+            encabezados :{ 'Tipo-de-contenido' : 'application/json' },
+            cuerpo : JSON.stringify ({ contenido : [{ rol : 'usuario' , partes :[{ texto :prompt}]} ] })
+          });
+          const resultado= esperar respuesta.json ()
+ ;
+          si (resultado. candidatos &&resultado. candidatos [ 0 ]&&resultado. candidatos [ 0 ]. contenido ){
+            outputDiv.innerHTML =result.candidatos [ 0 ] .contenido.partes [ 0 ] .texto.replace ( / \ n / g , '<br> '
+ ) ;
+            outputDiv.classList.remove ( ' oculto ' )
+ ;
+            agregarBotónCopiaAInsight (divSalida);
+          } demás {
+            outputDiv.innerHTML='Error al generar la respuesta.';
+            outputDiv.classList.remove ( ' oculto ' )
+ ;
+          }
+        } atrapar (e){
+          outputDiv.innerHTML='Hubo un problema con la conexión.';
+          outputDiv.classList.remove ( ' oculto ' )
+ ;
+        } finalmente {
+          loadingDiv.classList.add ( ' oculto ' )
+ ;
+        }
+      }
+
+      función addCopyButtonToInsight ( contenedor ){
+ 
+        si (contenedor.querySelector ( '.copy-btn' ) ) devolver ;
+        const btn= document .createElement ( 'botón' ) ;
+        btn.className = ' copia-btn' ;
+        btn.textContent = 'Copiar '
+ ;
+        btn.addEventListener ( 'clic' , ()= > {
+          navigator.clipboard.writeText (container.textContent.trim ( ) ) . then ( ( ) =
+ > {
+            btn. textContent = '¡Copiado!' ;
+            setTimeout ( ())=> {btn.textContent = ' Copiar' ;}, 2000 );
+          });
+        });
+        contenedor.appendChild (btn)
+ ;
+      }
+      document.getElementById('costInsightBtn').addEventListener('click',()=>{callGeminiAPI('Explica brevemente el impacto de cada partida en el costo por botella', 'costInsightOutput','costInsightLoading');});
+
+      constante canvas=documento.getElementById('partículas-bg'); constante ctx=canvas.getContext('2d'); dejar partículas=Array.from({longitud:40},()=>({x:Math.random()*ventana.anchointerior,y:Math.random()*ventana.altointerior,r:Math.random()*2+1,d:Math.random()*1+.5}));función drawParticles(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#FFC10788';partículas.forEach(p=>{ctx.beginPath();ctx.arc(px,py,pr,0,Math.PI*2);ctx.fill();p.y+=pd;if(py>window.innerHeight){py=0;px=Math.random()*window.innerWidth;}});requestAnimationFrame(drawParticles);}función resizeCanvas(){canvas.width=ventana.innerWidth;canvas.height=ventana.innerHeight;}ventana.addEventListener('resize',resizeCanvas);resizeCanvas();drawParticles();
+    </ script >
+  </ cuerpo >
+</html>
