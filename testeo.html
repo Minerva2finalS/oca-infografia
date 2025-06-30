@@ -1,334 +1,2176 @@
-<!doctype html >
-< html lang = "es" > 
-  < cabeza >
-    < meta charset = "UTF-8" > 
-    < meta name = "viewport" content = "ancho=ancho-del-dispositivo, escala-inicial=1.0" >  
-    <title>Infografía: Oca Divina</title>
-    < link rel = "preconectar" href = "https://fonts.googleapis.com" >  
-    < link rel = "preconnect" href = "https://fonts.gstatic.com" crossorigin >   
-    < link href = "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700 & display=swap" rel = "hoja de estilo" >  
-    < script src = " https://cdn.tailwindcss.com " > </script> 
-    < script src = " https://cdn.jsdelivr.net/npm/chart.js " > </script> 
-    < script src = " https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js " > </script> 
-    < estilo >
-      cuerpo{font-family:'Montserrat',sans-serif;fondo:#f1f5f9;color:#37474f;}
-      .typing-effect{overflow:hidden;border-right:2px solid #ffc107;white-space:nowrap;animation:typing 3s steps(40,end),blink-caret .75s step-end infinite;}
-      @keyframes escribiendo{desde{ancho:0}hasta{ancho:100%}}
-      @keyframes blink-caret{desde,hasta{color del borde:transparente}50%{color del borde:#ffc107}}
-      .chart-container{posición:relativa;ancho:100%;ancho máximo:450px;margen:automático;alto:320px;}
-      @media(ancho mínimo: 768px){.chart-container{alto: 350px;}}
-      .progress-bar{ancho:100%;alto:12px;fondo:gradiente-lineal(90deg,#e2e8f0 0%,#cbd5e0 100%);radio-del-borde:10px;desbordamiento:oculto;margen-inferior:1rem;posición:relativa;}
-      .progress-bar-inner{altura:100%;fondo:gradiente-lineal(90deg,#ffc107,#ff8f00,#e65100);tamaño-de-fondo:200% 100%;animación:progressGlow 2s entrada-salida gradual infinita;transición:ancho .8s cúbico-bezier(.25,.46,.45,.94);radio-del-borde:10px;}
-      @keyframes progressGlow{0%,100%{posición de fondo:0 0}50%{posición de fondo:100% 0}}
-      .stat-card{fondo:#fff;radio del borde:.75rem;relleno:1.5rem;alineación del texto:centro;sombra del cuadro:0 4px 6px -1px rgb(0 0 0 / .1),0 2px 4px -2px rgb(0 0 0 / .1);transición:transformación .3s facilidad,sombra del cuadro .3s facilidad;}
-      .stat-card:hover{transformar:translateY(-5px);sombra de caja:0 10px 15px -3px rgb(0 0 0 / .1),0 4px 6px -2px rgb(0 0 0 / .1);}
-      .ai-output-box{fondo:#e0f2f7;borde izquierdo:4px sólido #1a237e;relleno:1rem;margen superior:1rem;radio del borde:.5rem;color:#37474f;tamaño de fuente:.9rem;altura de línea:1.5;posición:relativa;}
-      .copy-btn{posición:absoluta;superior:.5rem;derecha:.5rem;fondo:#ffc107;color:#1a237e;borde:ninguno;radio del borde:.25rem;relleno:.25rem .5rem;tamaño de fuente:.8rem;cursor:puntero;transición:fondo .2s;}
-      .copy-btn:hover{fondo:#e65100;color:#fff;}
-      #particles-bg{posición:fija;superior:0;izquierda:0;ancho:100vw;alto:100vh;índice z:0;eventos de puntero:ninguno;}
-      .sequenced-element{opacidad:0;transformación:translaciónY(20px);transición:opacidad .8s salida fácil,transformación .8s salida fácil;}
-      .sequenced-element.is-visible{opacidad:1;transformación:translateY(0);}
-      .attribute-bar{fondo:gradiente lineal(90 grados,#e2e8f0 0%,#cbd5e0 100%);radio del borde:25px;desbordamiento:oculto;posición:relativa;sombra de caja:insertar 0 2px 4px rgba(0,0,0,.1);}
-      .flow-step:not(:last-child)::after{contenido:"";posición:absoluta;izquierda:50%;abajo:-2rem;transformar:translateX(-50%);ancho:2px;alto:2rem;fondo:#ffc107;}
-      .nav-arrows{mostrar:flexible;justificar-contenido:centro;espacio:1rem;margen-inferior:1rem;}
-      .nav-arrow-btn{fondo:gradiente lineal(145 grados,#1a237e 0%,#3f51b5 100%);color:#fff;borde:ninguno;radio del borde:50%;ancho:3rem;alto:3rem;tamaño de fuente:1.5rem;pantalla:flexible;elementos de alineación:centrado;contenido de justificación:centrado;cursor:puntero;transición:todos .3s cúbico-bezier(.4,0,.2,1);sombra de caja:0 4px 15px rgba(26,35,126,.3),recuadro 0 1px 0 rgba(255,255,255,.1);posición:relativa;desbordamiento:oculto;}
-      .nav-arrow-btn::before{contenido:"";posición:absoluta;superior:50%;izquierda:50%;ancho:0;alto:0;fondo:gradiente radial(círculo,rgba(255,193,7,.3) 0%,transparente 70%);transición:facilidad de .3s;radio del borde:50%;transformación:traducir(-50%,-50%);}
-      .nav-arrow-btn:hover::before{ancho:100px;alto:100px;}
-      .nav-arrow-btn:focus{contorno:2px sólido #ffc107;desplazamiento del contorno:2px;}
-      .nav-arrow-btn:hover{fondo:gradiente-lineal(145deg,#3f51b5 0%,#1a237e 100%);transformar:translateY(-2px) escala(1.05);sombra-cuadro:0 8px 25px rgba(26,35,126,.4),insertar 0 1px 0 rgba(255,255,255,.2);}
-      .nav-arrow-btn:active{transform:translateY(0) escala(.95);}
-      .restart-btn{fondo:gradiente lineal(145 grados,#ffc107 0%,#ffb300 100%);color:#1a237e;borde:ninguno;radio del borde:1rem;relleno:.75rem 2rem;peso de fuente:negrita;margen izquierdo:1rem;cursor:puntero;transición:todos .3s cúbico-bezier(.4,0,.2,1);sombra de caja:0 4px 15px rgba(255,193,7,.3),recuadro 0 1px 0 rgba(255,255,255,.2);posición:relativa;desbordamiento:oculto;}
-      .restart-btn::before{contenido:"";posición:absoluta;arriba:0;izquierda:-100%;ancho:100%;alto:100%;fondo:gradiente-lineal(90deg,transparente,rgba(255,255,255,.3),transparente);transición:izquierda .5s facilidad;}
-      .restart-btn:hover::before{izquierda:100%;}
-      .restart-btn:hover{fondo:gradiente-lineal(145deg,#ffb300 0%,#ff8f00 100%);color:#fff;transformar:translateY(-2px);sombra-cuadro:0 8px 25px rgba(255,193,7,.4),insertar 0 1px 0 rgba(255,255,255,.3);}
-      .dark-mode-toggle{posición:fija;superior:1rem;derecha:1rem;fondo:#37474f;color:#ffc107;borde:ninguno;radio del borde:1.5rem;relleno:.5rem 1.2rem;tamaño de fuente:1rem;cursor:puntero;índice z:100;transición:fondo .2s;}
-      .dark-mode-toggle:hover{fondo:#1a237e;color:#fff;}
-      cuerpo.modo oscuro.nav-flecha-btn{fondo:gradiente-lineal(145deg,#ffc107 0%,#ffb300 100%);color:#1a202c;sombra-caja:0 4px 15px rgba(255,193,7,.3);}
-      cuerpo.modo oscuro.nav-flecha-btn:hover{fondo:gradiente-lineal(145deg,#ffb300 0%,#ff8f00 100%);color:#fff;sombra-de-caja:0 6px 20px rgba(255,143,0,.4);}
-      cuerpo.modo oscuro.reinicio-btn{fondo:gradiente-lineal(145deg,#1a237e 0%,#3f51b5 100%);color:#ffd60a;sombra-de-caja:0 4px 15px rgba(26,35,126,.3);}
-      cuerpo.modo oscuro.reinicio-btn:hover{fondo:gradiente-lineal(145deg,#3f51b5 0%,#1a237e 100%);color:#fff;sombra-de-caja:0 6px 20px rgba(63,81,181,.4);}
-      cuerpo.modo oscuro.barra de progreso{fondo:#2d3748;borde:1px sólido #4a5568;}
-      cuerpo.modo oscuro.barra de progreso interior{fondo:gradiente lineal(90 grados,#ffd60a,#ffb300,#ff8f00);sombra de caja:0 0 15px rgba(255,214,10,.6),insertar 0 1px 0 rgba(255,255,255,.2);}
-      .tooltip{posición:relativa;cursor:ayuda;}
-      .tooltip::before{contenido:attr(data-tooltip);posición:absoluta;inferior:125%;izquierda:50%;transformar:translateX(-50%);fondo:gradiente-lineal(145deg,#1a237e 0%,#2d3748 100%);color:#ffd60a;relleno:.5rem 1rem;radio-del-borde:.5rem;tamaño-de-fuente:.875rem;espacio-en-blanco:nowrap;opacidad:0;visibilidad:oculta;transición:todos .3s cúbico-bezier(.4,0,.2,1);eventos-de-puntero:ninguno;sombra-de-cuadro:0 4px 20px rgba(0,0,0,.3);índice-z:1000;}
-      .tooltip::after{contenido:"";posición:absoluta;inferior:115%;izquierda:50%;transformación:translateX(-50%);borde:5px sólido transparente;color superior del borde:#1a237e;opacidad:0;visibilidad:oculta;transición:todos .3s cúbico-bezier(.4,0,.2,1);índice z:1000;}
-      .tooltip:hover::before,.tooltip:hover::after{opacidad:1;visibilidad:visible;transformar:translateX(-50%) translateY(-5px);}
-      cuerpo.modo oscuro.tooltip::antes{fondo:gradiente-lineal(145deg,#ffd60a 0%,#ffb300 100%);color:#1a237e;}
-      cuerpo.modo oscuro.tooltip::after{border-top-color:#ffd60a;}
-      .pulse-effect{animation:pulseGlow 2s entrada-salida gradual infinita;}
-      @keyframes pulseGlow{0%,100%{sombra de caja:0 0 5px rgba(255,193,7,.5);}50%{sombra de caja:0 0 20px rgba(255,193,7,.8),0 0 30px rgba(255,193,7,.4);}}
-      .parallax-element{archivo adjunto de fondo: fijo; posición de fondo: centro; repetición de fondo: sin repetición; tamaño de fondo: cubierta;}
-      .micro-bounce:hover{animación:microBounce .6s facilidad;}
-      @keyframes microBounce{0%,20%,50%,80%,100%{transformar:translateY(0);}40%{transformar:translateY(-10px);}60%{transformar:translateY(-5px);}}
-      .glass-effect{fondo:rgba(255,255,255,.1);filtro-de-fondo:desenfoque(10px) saturación(180%);borde:1px sólido rgba(255,255,255,.2);sombra-de-caja:0 8px 32px rgba(0,0,0,.1);}
-      .attribute-bar-fill{fondo:gradiente-lineal(90deg,#ffd60a 0%,#ff8f00 50%,#ff6f00 100%);altura:100%;radio-del-borde:25px;posición:relativa;transición:ancho 1.5s cúbico-bezier(.25,.46,.45,.94);sombra-de-caja:0 2px 8px rgba(255,214,10,.3),recuadro 0 1px 0 rgba(255,255,255,.3);}
-      .contenedor-de-botella-de-vino{perspectiva:1000px;pantalla:flexible;justificar-contenido:centrar;alinear-elementos:centrar;}
-      .wine-bottle{transición:transformación .5s facilidad;filtro:sombra paralela(0 10px 30px rgba(0,0,0,.3));}
-      .botella-de-vino:hover{transformar:rotarY(15deg) escala(1.05);filtro:sombra-paralela(0 15px 40px rgba(255,193,7,.3));}
-      .bottle-body{transición:filter .3s facilidad;}
-      .botella-de-vino:hover .cuerpo-de-botella{filtro:brillo(1.1);}
-      cuerpo.modo oscuro .botella de vino{filtro:sombra paralela(0 10px 30px rgba(255,214,10,.2));}
-      cuerpo.modo oscuro.botella de vino:hover{filtro:sombra paralela(0 15px 40px rgba(255,214,10,.4));}
-      .attribute-bar-fill::after{contenido:"";posición:absoluta;superior:0;derecha:-50px;ancho:50px;alto:100%;fondo:gradiente-lineal(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.6) 50%,rgba(255,255,255,0) 100%);animación:brillo 2s infinito;}
-      @keyframes shimmer{0%{transform:translateX(-100px)}100%{transform:translateX(300px)}}
-      cuerpo.modo oscuro{fondo:gradiente lineal(135deg,#0f1419 0%,#1a202c 25%,#2d3748 50%,#1a202c 75%,#0f1419 100%);tamaño de fondo:400% 400%;animación:gradienteDesplazamiento 15s facilidad infinita;color:#e2e8f0;posición:relativa;}
-      @keyframes gradientShift{0%{posición de fondo:0% 50%}50%{posición de fondo:100% 50%}100%{posición de fondo:0% 50%}}
-      cuerpo.modo oscuro.tarjeta estadística{fondo:rgba(45,55,72,.7);filtro de fondo:desenfoque(20px) saturación(180%);borde:1px sólido rgba(255,193,7,.2);sombra de caja:0 8px 32px rgba(0,0,0,.4),recuadro 0 1px 0 rgba(255,255,255,.1),0 0 0 1px rgba(255,193,7,.1);color:#e2e8f0;}
-      cuerpo.modo oscuro.tarjeta estadística:hover{fondo:rgba(74,85,104,.8);color del borde:rgba(255,193,7,.4);sombra del cuadro:0 12px 40px rgba(255,193,7,.3),recuadro 0 1px 0 rgba(255,255,255,.15),0 0 0 1px rgba(255,193,7,.2);transformar:translateY(-8px) escala(1.02);}
-      cuerpo.modo oscuro.barra de progreso{fondo:#2d3748;borde:1px sólido #4a5568;}
-      cuerpo.modo oscuro.barra de atributo{fondo:gradiente lineal(90deg,#2d3748 0%,#4a5568 100%);}
-      cuerpo.modo oscuro.atributo-barra-relleno{fondo:gradiente-lineal(90deg,#ffd60a 0%,#ffb300 50%,#ff8f00 100%);}
-      cuerpo.modo oscuro.ai-output-box{fondo:gradiente lineal(145deg,#1a202c 0%,#2d3748 100%);color:#ffd60a;borde izquierdo:4px sólido #ffd60a;sombra de caja:0 4px 20px rgba(255,214,10,.1);}
-      @keyframes fire-flicker{0%{filtro:brillo(1.2) sombra paralela(0 0 4px #ff9800);}50%{filtro:brillo(1.6) sombra paralela(0 0 12px #ff9800);}100%{filtro:brillo(1.2) sombra paralela(0 0 4px #ff9800);}}
-      @keyframes cork-pop{0%{transform:translateY(0);}30%{transform:translateY(-20px) rotate(-10deg);}60%{transform:translateY(0) rotate(0);}100%{transform:translateY(0);}}
-      @keyframes sun-spin{0%{transform:rotate(0);}100%{transform:rotate(360deg);}}
-      @keyframes bubble{0%{transform:translateY(0) escala(1);opacidad:1;}50%{transform:translateY(-10px) escala(1.1);opacidad:.7;}100%{transform:translateY(0) escala(1);opacidad:1;}}
-      .fire-emoji{animación:fire-flicker 1s infinito;}
-      .cork-emoji{animación:cork-pop 1,5 s infinito;}
-      .sun-emoji{animación:sun-spin 4s lineal infinito;}
-      .bubble-emoji{animación:burbuja 2s infinita;}
-    </ estilo >
-  </ cabeza >
-  < cuerpo >
-    < canvas id = "partículas-bg" > </ canvas > 
-    < button id = "darkModeToggle" class = "fixed top-2 right-2 bg-gray-700 text-yellow-400 px-3 py-1 rounded" aria-label = "Alternar modo claro/oscuro" > 🌙 </ button >   
-    < clase principal = "relativo z-10" rol = "principal" >  
-      < div class = "barra-de-progreso" aria-label = "Progreso" > < div id = "barra-de-progreso-interior" class = "barra-de-progreso-interior" style = "ancho:0%" > </ div > </ div >     
-      <divclass="flex justify-center gap-4 mb-4"aria-label="Navegación">  
-        < button id = "flechaIzquierda" class = "nav-arrow-btn" aria-label = "Anterior" > ← </ button >   
-        < button id = "flechaDerecha" class = "nav-arrow-btn" aria-label = "Siguiente" > → </ button >   
-        Reiniciar​​​​​​​​​​​​​​​   
-      </div>​​
-      < encabezado clase = "text-center mb-12 md:mb-16" > 
-        Oca Divina​​​​​​​​ 
-        <pclass="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto sequenced-element typing-effect">Un vino innovador de los Andes peruanos que fusiona tradición y modernidad.</p> 
-        < div class = "w-full flex justify-center mt-4 sequenced-element wine-bottle-container" > 
-          < clase SVG = "botella de vino" ancho = "80" alto = "120" viewBox = "0 0 80 120" xmlns = "http://www.w3.org/2000/svg" >     
-            < defs >
-              < gradientelineal id = "gradientebotella" x1 = "0%" y1 = "0%" x2 = "100%" y2 = "100%" >     
-                < desplazamiento de parada = "0%" estilo = "color de parada:#2a5c2a;opacidad de parada:1" />  
-                < desplazamiento de parada = "50%" estilo = "color de parada:#1a4a1a;opacidad de parada:1" />  
-                < desplazamiento de parada = "100%" estilo = "color de parada: #0f2f0f;opacidad de parada: 1" />  
-              </gradientelineal>​​
-              < gradientelineal id = "gradientevino" x1 = "0%" y1 = "0%" x2 = "100%" y2 = "100%" >     
-                < desplazamiento de parada = "0%" estilo = "color de parada: #8b0000;opacidad de parada: 0.9" />  
-                < desplazamiento de parada = "50%" estilo = "color de parada:#dc143c;opacidad de parada:0.8" />  
-                < desplazamiento de parada = "100%" estilo = "color de parada:#b22222;opacidad de parada:0.9" />  
-              </gradientelineal>​​
-              < gradiente lineal id = "gradienteetiqueta" x1 = "0%" y1 = "0%" x2 = "100%" y2 = "100%" >     
-                < desplazamiento de parada = "0%" estilo = "color de parada:#ffc107;opacidad de parada:1" />  
-                < desplazamiento de parada = "100%" estilo = "color de parada:#ffb300;opacidad de parada:1" />  
-              </gradientelineal>​​
-            </defs>​​
-            < rect x = "25" y = "35" ancho = "30" alto = "75" rx = "3" relleno = "url(#bottleGradient)" clase = "bottle-body" />       
-            < rect x = "32" y = "20" ancho = "16" alto = "20" relleno = "url(#bottleGradient)" />     
-            < rect x = "27" y = "40" ancho = "26" alto = "65" rx = "2" relleno = "url(#wineGradient)" opacidad = "0.8" />       
-            < rect x = "28" y = "55" ancho = "24" alto = "20" rx = "2" relleno = "url(#labelGradient)" />      
-            < texto x = "40" y = "62" ancla-texto = "medio" tamaño-fuente = "6" peso-fuente = "negrita" relleno = "#1A237E" > OCA </ texto >      
-            DIVINA​​​​​​​​​​​​​​​​​​​​​     
-            < rect x = "33" y = "15" ancho = "14" alto = "8" rx = "1" relleno = "#8B4513" />      
-            < rect x = "30" y = "25" ancho = "3" alto = "70" rx = "1.5" relleno = "rgba(255,255,255,0.3)" opacidad = "0.6" />       
-            < elipse cx = "40" cy = "115" rx = "20" ry = "3" relleno = "rgba(0,0,0,0.2)" />     
-          </svg>​​
-        </div>​​
-        Descargar PDF​​​​​​​​​​​  
-      </ encabezado >
-      < sección clase = "mb-12 md:mb-16" > 
-        El Pulso del Mercado​​​​​​ 
-        <pclass="text-center max-w-2xl mx-auto mb-10 sequenced-element">Los datos de la encuesta revelan un fuerte interés del consumidor, validando la propuesta de valor del producto.</p> 
-        < div class = "cuadrícula cuadrícula-columnas-1 md:cuadrícula-columnas-2 lg:cuadrícula-columnas-3 espacio-8 elementos-centro" > 
-          < div class = "stat-card sequenced-element" > 
-            < div class = "text-7xl font-bold text-orange-700 animated-number" data -target-value = "87" data -is-percentage = "true" > 0% </div>   
-            <pclass="text-xl mt-2">manifestó su intención de comprar el producto.</p> 
-          </div>​​
-          < div class = "stat-card grid grid-cols-1 sm:grid-cols-2 gap-8 sequenced-element" data-chart-id = "ageChart,innovationChart" >  
-            <div>​​
-              Público objetivo​​​​​​​​ 
-              < div class = "chart-container" > < canvas id = "ageChart" > </ canvas > </ div >  
-            </div>​​
-            <div>​​
-              <h3class="text-xl font-semibold mb-4 text-indigo-900">Percepción de Innovación</h3> 
-              < div class = " chart - container" > < canvas id = " innovationChart" > </canvas> </div>  
-            </div>​​
-          </div>​​
-          < div class = "stat-card md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-8 sequenced-element" data-chart-id = "priceChart" >  
-            <div>​​
-              <h3class="text-xl font-semibold mb-4 text-indigo-900">Precio Sugerido</h3> 
-              < div class = " chart -container" > < canvas id = " priceChart " > </canvas> </div>  
-            </div>​​
-            <div>​​
-              Atributos valiosos​​​​​​​​ 
-              <pclass="text-sm mb-4">Autenticidad del sabor y origen del producto.</p> 
-              < div class = "espacio-y-4 texto-izquierda" > 
-                < div class = "attribute-bar h-8 relative" > < div class = "attribute-bar-fill text-xs font-bold text-white text-center lead-8" style = " width : 0%" data -width = "95" > 🍇 Sabor auténtico </div> </div>    
-                < div class = "attribute-bar h-8 relative" > < div class = "attribute-bar-fill text-xs font-bold text-white text-center lead-8" style = " width :0%" data -width = "85" > 🌿 Origen natural </div> </div>    
-                < div class = "attribute-bar h-8 relative" > < div class = "attribute-bar-fill text-xs font-bold text-white text-center lead-8" style = " width :0%" data-width = " 70" > 💚 Beneficios </div> </div>    
-                < div class = "attribute-bar h-8 relative" > < div class = "attribute-bar-fill text-xs font-bold text-white text-center lead-8" style = " width : 0%" data-width = "60" > 🎨 Producción artesanal </div> </div>    
-              </div>​​
-            </div>​​
-          </div>​​
-        </div>​​
-      </ sección >
-      < sección clase = "mb-12 md:mb-16" > 
-        El Plan Financiero​​​​​​​ 
-        <pclass="text-center max-w-2xl mx-auto mb-10 sequenced-element">Análisis detallado de los costos por lote (500 litros) revela una estructura manejable y un camino claro hacia la rentabilidad.</p> 
-        < div class = "grid grid-cols-1 md:grid-cols-2 gap-8 items-center" > 
-          < div class = "stat-card sequenced-element" data-chart-id = "costChart" >  
-            <h3class="text-xl font-semibold mb-4 text-indigo-900">Desglose del Costo por Botella</h3> 
-            < div class = " chart -container" > < canvas id = " costChart " > </canvas> </div>  
-            < button id = "costInsightBtn" class = "mt-4 px-4 py-2 bg-orange-700 text-white font-bold rounded hover:bg-orange-600 transition-colors" > Información de costos ✨ </ button >  
-            < div id = "costInsightOutput" class = "ai-output-box oculto" > </ div >  
-            Cargando ...​​​​​​​​​​​  
-          </div>​​
-          < div clase = "espacio-y-6" > 
-            < div class = "stat-card sequenced-element" > 
-              < div class = "text-4xl font-bold text-orange-700 animated-number" data - target-value = "9094" data-prefix = "S/" > S/ 0.00 </div>   
-              <pclass="text-lg mt-2">Costo Total Estimado por Lote</p> 
-            </div>​​
-            < div class = "stat-card sequenced-element" > 
-              < div class = "text-4xl font-bold text-orange-700 animated-number" data - target-value = "18.19" data-prefix = "S/" > S/ 0.00 </div>   
-              <pclass="text-lg mt-2">Costo por Litro Producido</p> 
-            </div>​​
-          </div>​​
-        </div>​​
-      </ sección >
-      < sección clase = "mb-12 md:mb-16" > 
-        Indicadores Clave​​​​​​​​ 
-        <pclass="text-center max-w-2xl mx-auto mb-10 sequenced-element">La productividad es la medida de nuestra optimización.</p> 
-        < div class = "cuadrícula columnas-cuadrícula-1 sm:cuadrícula columnas-cuadrícula-2 lg:cuadrícula columnas-cuadrícula-4 espacio-6" > 
-          < div class = "stat-card sequenced-element" > < div class = "text-4xl font-bold text-indigo-900 animated-number"> data-target-value = "3.30"> data -prefix = " S/" > S/ 0.00 </div> < p class = "text - md mt-2" > Generados por cada S / 1 invertido. </p> </div>     
-          < div class = "stat-card sequenced-element" > < div class = "text-4xl font-bold text-indigo-900 animated-number"> data-target-value = "16.68"> data -prefix = "S/" > S / 0.00 </div> < p class = " text-md mt-2" > Por cada S / 1 en mano de obra. </p> </div>     
-          < div class = "stat-card sequenced-element" > < div class = "text-4xl font-bold text-indigo-900 animated-number"> data-target-value = "12"> data -prefix = "S/" > S/ 0.00 </div> < p class = "text- md mt-2" > Por cada S / 1 en oca. </p> </div>     
-          < div class = "stat-card sequenced-element" > < div class = "text-4xl font-bold text-indigo-900 animated-number"> data-target-value = "5" data-suffix = " L" > 0 L </div> < p class = " text-md mt-2" > Litros por hora de trabajo . </p> </div>     
-        </div>​​
-      </ sección >
-      < sección clase = "mb-12 md:mb-16" > 
-        De los Andes a la Botella​​​​ 
-        < div class = "cuadrícula relativa cuadrícula-columnas-2 md:cuadrícula-columnas-3 lg:cuadrícula-columnas-5 espacio-8" > 
-          Recepción y selección​​​​​​​​​​​​​​​​​​​​​​​​​​​​​    
-          Curado al sol​​​​​​​​​​​​​​​​​​​​​​​​​​​​​    
-          < div class = "relative flex flex-col items-center flow-step sequenced-element" > < div class = "w-16 h-16 rounded-full bg - yellow-500 flex items-center justify-center text-2xl text-white mb-3 fire-emoji"> aria - hidden = " true " > 🔥 </div> < p class = " font -semibold text-center" > Cocción y Prensado </p> </div>    
-          < div class = "relative flex flex-col items-center flow-step sequenced-element" > < div class = "w-16 h-16 rounded-full bg - yellow-500 flex items-center justify -center text-2xl text-white mb-3 bubble-emoji"> aria - hidden = " true" > ⚗️ </div> < p class = " font -semibold text-center" > Fermentación </p> </div>    
-          Embotellado​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​    
-        </div>​​
-      </ sección >
-      < sección >
-        Las 4 P​​​​​​​ 
-        < div class = "cuadrícula columnas-cuadrícula-1 md:cuadrícula columnas-cuadrícula-2 lg:cuadrícula columnas-cuadrícula-4 espacio-6" > 
-          < div class = "stat-card sequenced-element" > < h3 class = "text-2xl font-bold mb-3 text-orange-700" > Producto </ h3 > < ul class = "list-disc list-inside space-y-2" > < li > Vino de oca innovador </ li > < li > Sabor único </ li > < li > Origen andino </ li > < li > Presentación 750ml </ li > </ ul > </ div >   
-          < div class = "stat-card sequenced-element" > < h3 class = "text-2xl font-bold mb-3 text-orange-700" > Precio </ h3 > < ul class = "list-disc list-inside space-y-2" > < li > Estrategia Premium </ li > < li > Costo de la botella: S/ 13.63 </ li > < li > PvP: S/ 45-55 </ li > < li > Márgenes saludables </ li > </ ul > </ div >   
-          < div class = "stat-card sequenced-element" > < h3 class = "text-2xl font-bold mb-3 text- orange - 700 " > Plaza < / h3 " > < ul class = " list - disc list - inside space - y - 2 " > <li> Tiendas gourmet </li> <li> HoReCa </li> <li> Comercio electrónico </li> <li> Supermercados </li> </ul> </div>   
-          Promoción </h3> <ul> clase - disc > list - inside - space - y - 2 > <li> Storytelling </li> <li> Marketing Digital </li> <li> Alianzas con chefs </li> <li> Catálogos </li> ul > </div>​​​​​​​​​​​​​​​​​​​​​   
-        </div>​​
-      </ sección >
-    Usa ← → para navegar . Desliza en el móvil . 
-    </ principal >
-    < footer class = "text-center p-6 mt-12 bg-indigo-900 text-white" > < p > © 2025 ANDINA SPIRITUS SAC - Proyecto "Oca Divina". </ p > </ footer > 
-    < script >
-      constante PALETA =[ '#FFC107' , '#E65100' , '#1A237E' , '#FF7043' , '#FFA000' ];
- 
-      constante FONT_COLOR = '#37474F' ;
- 
-      deje que chartInstances={};
-      const defaultOptions={ responsive : true , maintainAspectRatio : false , plugins :{ legend :{ position : 'bottom' , labels :{ color : FONT_COLOR , font :{ size : 12 }}}, tooltip :{ callbacks : { title : ( items )=> Array.isArray (items[ 0 ] .label )?items[ 0 ] .label.join ( ' ' ) : items[ 0 ].label } } }, color : FONT_COLOR }
- ;
-      constante chartConfigs={
-        ageChart:{type:'doughnut',data:{labels:['23-30 años','31-40 años','18-22 años','41-50 años','51+ años'],datasets:[{label:'Distribución por Edad',data:[38,27,20,11,4],backgroundColor:PALETTE,borderColor:'#FFFFFF',borderWidth:2}]},options:{...defaultOptions}},
-        innovaciónChart :{ tipo : 'bar' , datos :{ etiquetas :[ 'Muy innovador' , 'Bastante' , 'Medianamente' , 'Poco' , 'Nada' ], conjuntos de datos :[{ etiqueta : '% de Encuestados' , datos :[ 45 , 32 , 21 , 1 , 1 ], backgroundColor : PALETA [ 0 ], borderColor : PALETA [ 1 ], borderWidth : 1 }]}, opciones :{...defaultOptions, indexAxis : 'y' , escalas :{ x :{ grid :{ borderColor : '#E5E7EB' , color : '#E5E7EB' }, ticks :{ color : FONT_COLOR }}, y :{ grid :{ display : false , borderColor : '#E5E7EB' }, ticks :{ color : FONT_COLOR }}}, plugins :{ leyenda :{ display : false }}}},
-        priceChart :{ type : 'donut' , data :{ labels :[ 'S/ 40-60' , 'Menos de S/ 40' , 'S/ 60-80' , 'Más de S/ 80' ], datasets :[{ label : 'Precio sugerido' , data :[ 49 , 35 , 12 , 4 ], backgroundColor : PALETTE , borderColor : '#FFFFFF' , borderWidth : 2 }]}, options :{...defaultOptions}},
-        costChart :{ type : 'doughnut' , data :{ labels :[ 'Empaques' , 'Materia Prima' , 'Mano de Obra' , 'CIF' , 'Operativos' ], datasets :[{ label : 'Costo por Botella' , data :[ 29.5 , 26.1 , 18 , 14.3 , 3 ], backgroundColor : PALETTE . slice ( 0 , 5 ). reverse (), borderColor : '#FFFFFF' , borderWidth : 2 }]}, options :{...defaultOptions, plugins :{ tooltip :{ callbacks :{ label : ( ctx )=> ` ${ctx.dataset.label|| '' } : ${ctx.parsed.toFixed( 1 )} %` }}}}}
-      };
-      función initChart ( id ) { si (!chartInstances[id]&&chartConfigs[id]){ const ctx= document.getElementById (id) .getContext ( '2d' );chartInstances[id]= new Chart ( ctx,chartConfigs[id]);} de lo contrario si (chartInstances[id]){chartInstances[id] .update ();}}
-   
-      función destroyChart ( id ){ if (chartInstances[id]){chartInstances[id].destroy ( ); eliminar chartInstances[id];}}
- 
-      const sequencedElements=[... document.querySelectorAll ( 'encabezado p,sección h2,sección p,sección.stat-card,sección.flow-step' ) ] ;
-      deje que currentElementIndex=- 1 ;
-      sequencedElements.forEach ( el = > el.classList.add ( 'elemento-secuenciado ' ) ) ;
-      función animateNumber ( el,objetivo,esPorcentaje,prefijo= '' ,sufijo= '' ){ let start= 0 ; const startTime=performance.now (); función step ( t ) { const progress = Math.min ( (t-startTime)/ 1500 , 1 ); const value=start+(objetivo-inicio)*progreso;el.textContent = esPorcentaje? ` ${ Math.floor (valor)} %` : ` ${prefijo} ${valor.toFixed( 2 )} ${sufijo} ` ; if (progreso< 1 ) requestAnimationFrame (paso);} requestAnimationFrame (paso);}
-  
-      función animateAttributeBars ( ) { documento . querySelectorAll ( '. atributo-barra-relleno' ). forEach ( barra => { const ancho=barra. dataset . ancho ;barra. estilo . ancho = ancho? ` ${ancho} %` : '0%' ;});}
- 
-      función revelar ( el ){el. classList . add ( 'is-visible' ); si (el. querySelector ( '. animado-numero' )){ const num=el. querySelector ( '. animado-numero' ); animateNumber (num, parseFloat (num. dataset . targetValue ),num. dataset . isPercentage === 'true' ,num. dataset . prefijo || '' ,num. dataset . sufijo || '' );} const chartIds=el. dataset . chartId ; si (chartIds)chartIds. split ( ',' ). forEach ( id => initChart (id. trim ())); si (el. querySelector ( '. atributo-barra-relleno' )) setTimeout (animateAttributeBars, 500 );}
- 
-      función ocultar ( el ){el.classList.remove ( ' es-visible' ); si ( el.querySelector ( '.animated-number' )){ const num=el.querySelector ( '.animated-number' ); num.textContent = num.dataset.isPercentage === ' verdadero ' ? ' 0 %' : ` $ {num.dataset.prefix|| '' } 0.00 $ {num.dataset.suffix|| '' } ` ;} const chartIds=el.dataset.chartId ; si ( chartIds)chartIds.split ( ' ,' ) .forEach ( id => destroyChart (id.trim ())); si ( el.querySelector ( ' .attribute -bar-fill' ) ) document.querySelectorAll ( ' .attribute-bar-fill ' ) . para cada ( barra => barra. estilo . ancho = '0%' );}
- 
-      función navegar ( dir ){ const next=currentElementIndex+(dir=== 'derecha' ? 1 :- 1 ); si (next< 0 ||next>=sequencedElements. length ) devolver ; si (dir=== 'derecha' ){ revelar (sequencedElements[next]);} de lo contrario { ocultar (sequencedElements[currentElementIndex]);}currentElementIndex=siguiente; updateProgressBar ();sequencedElements[currentElementIndex]. scrollIntoView ({ comportamiento : 'suave' , bloque : 'centro' });}
- 
-      función updateProgressBar ( ) { const prog=((currentElementIndex+ 1 )/sequencedElements.length )* 100 ; documento.getElementById ( 'progressBarInner' ) . style.width = ` $ { prog } % ` ;}
- 
-      documento . getElementById ( 'flechaIzquierda' ). addEventListener ( 'clic' , ()=> navegar ( 'izquierda' ));
-      documento . getElementById ( 'arrowRight' ). addEventListener ( 'click' , ()=> browse ( 'right' ));
-      documento . getElementById ( 'restartBtn' ). addEventListener ( 'click' , ()=> { if (currentElementIndex>= 0 ) hide (sequencedElements[currentElementIndex]);currentElementIndex=- 1 ; updateProgressBar (); ventana . scrollTo ({ top : 0 , comportamiento : 'suave' });});
-      documento .addEventListener ( 'keydown' , e => { if ( e.key === 'ArrowRight' ) browse ( 'derecha' ) ; else if ( e.key === 'ArrowLeft' ) browse ( 'izquierda' );});
- 
-      documento.getElementById ( 'darkModeToggle' ) . addEventListener ( ' click' , ( )=> { documento.body.classList.toggle ( ' modo - oscuro ' ) ; localStorage.setItem ( 'darkMode' , documento.body.classList.contains ( ' modo - oscuro ' ) ) ; updateChartsForDarkMode ( documento.body.classList.contains ( ' modo - oscuro ' )
- ) ; } ) ;
-      si ( localStorage . getItem ( 'darkMode' )=== 'true' ){ documento . body . classList . add ( 'dark-mode' );}
-      función updateChartsForDarkMode ( isDark ) { Object.values (chartInstances) .forEach ( chart => {chart.options.plugins.leyenda.etiquetas.color = isDark ? ' # FFC107 ' : COLOR_DE_FUENTE ; chart.options.scales && Object.values ( chart.options.scales ).forEach ( scale = > { scale.ticks.color = isDark ? ' #FFC107' :COLOR_DE_FUENTE;scale.grid.color = isDark ? ' # 37474f ' : ' # E5E7EB ' ; } ) ; chart.update ( );}
- ) ; } 
-
-      documento.getElementById ( 'descargarPDF' ) . addEventListener ( ' clic' , ( )=> { html2pdf (). from ( documento.querySelector ( 'principal' )). save ( ' Infografia_OcaDivina.pdf' );});
-
-      llamada de función asíncrona GeminiAPI ( prompt,outputElementId,loadingElementId ){
-  
-        const outputDiv= document.getElementById (outputElementId
- ) ;
-        const loadingDiv= document .getElementById ( loadingElementId );
-        outputDiv.classList.add ( ' oculto ' )
- ;
-        loadingDiv.classList.remove ( ' oculto ' )
- ;
-        intentar {
-          respuesta constante = esperar búsqueda ( 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=YOUR_GEMINI_API_KEY_HERE' ,{
- 
-            método : 'POST' ,
-            encabezados :{ 'Tipo-de-contenido' : 'application/json' },
-            cuerpo : JSON.stringify ({ contenido : [{ rol : 'usuario' , partes :[{ texto :prompt}]} ] })
-          });
-          const resultado= esperar respuesta.json ()
- ;
-          si (resultado. candidatos &&resultado. candidatos [ 0 ]&&resultado. candidatos [ 0 ]. contenido ){
-            outputDiv.innerHTML =result.candidatos [ 0 ] .contenido.partes [ 0 ] .texto.replace ( / \ n / g , '<br> '
- ) ;
-            outputDiv.classList.remove ( ' oculto ' )
- ;
-            agregarBotónCopiaAInsight (divSalida);
-          } demás {
-            outputDiv.innerHTML='Error al generar la respuesta.';
-            outputDiv.classList.remove ( ' oculto ' )
- ;
-          }
-        } atrapar (e){
-          outputDiv.innerHTML='Hubo un problema con la conexión.';
-          outputDiv.classList.remove ( ' oculto ' )
- ;
-        } finalmente {
-          loadingDiv.classList.add ( ' oculto ' )
- ;
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Infografía: Oca Divina - Análisis de Negocio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: #f1f5f9;
+        color: #37474f;
+      }
+      .chart-container {
+        position: relative;
+        width: 100%;
+        max-width: 450px;
+        margin-left: auto;
+        margin-right: auto;
+        height: 320px;
+      }
+      @media (min-width: 768px) {
+        .chart-container {
+          height: 350px;
+        }
+      }
+      .flow-step:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -2rem;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 2rem;
+        background-color: #ffc107;
+      }
+      .stat-card {
+        background-color: white;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+          0 2px 4px -2px rgb(0 0 0 / 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+          0 4px 6px -2px rgb(0 0 0 / 0.1);
+      }
+      .ai-output-box {
+        background-color: #e0f2f7;
+        border-left: 4px solid #1a237e;
+        padding: 1rem;
+        margin-top: 1rem;
+        border-radius: 0.5rem;
+        color: #37474f;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        position: relative;
+      }
+      .copy-btn {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background: #ffc107;
+        color: #1a237e;
+        border: none;
+        border-radius: 0.25rem;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .copy-btn:hover {
+        background: #e65100;
+        color: #fff;
+      }
+      /* New CSS for sequenced elements */
+      .sequenced-element {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      }
+      .sequenced-element.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      /* Initial state for number animation */
+      .animated-number {
+        color: #37474f; /* Default text color */
+        transition: color 0.5s ease-out; /* Smooth color transition */
+      }
+      /* Barra de progreso premium con efectos avanzados */
+      .progress-bar {
+        width: 100%;
+        height: 12px;
+        background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e0 100%);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+        position: relative;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1),
+          0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+      .progress-bar-inner {
+        height: 100%;
+        background: linear-gradient(90deg, #ffc107, #ff8f00, #e65100);
+        background-size: 200% 100%;
+        animation: progressGlow 2s ease-in-out infinite;
+        transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        border-radius: 10px;
+        position: relative;
+        box-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+      }
+      .progress-bar-inner::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 50%;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.4) 0%,
+          rgba(255, 255, 255, 0.1) 100%
+        );
+        border-radius: 10px 10px 0 0;
+      }
+      @keyframes progressGlow {
+        0%,
+        100% {
+          background-position: 0% 0%;
+          box-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+        }
+        50% {
+          background-position: 100% 0%;
+          box-shadow: 0 0 20px rgba(255, 193, 7, 0.8);
         }
       }
 
-      función addCopyButtonToInsight ( contenedor ){
- 
-        si (contenedor.querySelector ( '.copy-btn' ) ) devolver ;
-        const btn= document .createElement ( 'botón' ) ;
-        btn.className = ' copia-btn' ;
-        btn.textContent = 'Copiar '
- ;
-        btn.addEventListener ( 'clic' , ()= > {
-          navigator.clipboard.writeText (container.textContent.trim ( ) ) . then ( ( ) =
- > {
-            btn. textContent = '¡Copiado!' ;
-            setTimeout ( ())=> {btn.textContent = ' Copiar' ;}, 2000 );
-          });
-        });
-        contenedor.appendChild (btn)
- ;
+      /* Modo oscuro para barra de progreso */
+      body.dark-mode .progress-bar {
+        background: linear-gradient(90deg, #2d3748 0%, #4a5568 100%);
+        border: 1px solid #4a5568;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3),
+          0 1px 2px rgba(0, 0, 0, 0.2);
       }
-      document.getElementById('costInsightBtn').addEventListener('click',()=>{callGeminiAPI('Explica brevemente el impacto de cada partida en el costo por botella', 'costInsightOutput','costInsightLoading');});
+      body.dark-mode .progress-bar-inner {
+        background: linear-gradient(90deg, #ffd60a, #ffb300, #ff8f00);
+        box-shadow: 0 0 15px rgba(255, 214, 10, 0.6),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      }
+      /* Botones de navegación premium */
+      .nav-arrows {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      .nav-arrow-btn {
+        background: linear-gradient(145deg, #1a237e 0%, #3f51b5 100%);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 15px rgba(26, 35, 126, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+      .nav-arrow-btn::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: radial-gradient(
+          circle,
+          rgba(255, 193, 7, 0.3) 0%,
+          transparent 70%
+        );
+        transition: all 0.3s ease;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .nav-arrow-btn:hover::before {
+        width: 100px;
+        height: 100px;
+      }
+      .nav-arrow-btn:focus {
+        outline: 2px solid #ffc107;
+        outline-offset: 2px;
+      }
+      .nav-arrow-btn:hover {
+        background: linear-gradient(145deg, #3f51b5 0%, #1a237e 100%);
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 8px 25px rgba(26, 35, 126, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      }
+      .nav-arrow-btn:active {
+        transform: translateY(0) scale(0.95);
+      }
+      .restart-btn {
+        background: linear-gradient(145deg, #ffc107 0%, #ffb300 100%);
+        color: #1a237e;
+        border: none;
+        border-radius: 1rem;
+        padding: 0.75rem 2rem;
+        font-weight: bold;
+        margin-left: 1rem;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+      }
+      .restart-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: left 0.5s ease;
+      }
+      .restart-btn:hover::before {
+        left: 100%;
+      }
+      .restart-btn:hover {
+        background: linear-gradient(145deg, #ffb300 0%, #ff8f00 100%);
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      }
+      .dark-mode-toggle {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        background: #37474f;
+        color: #ffc107;
+        border: none;
+        border-radius: 1.5rem;
+        padding: 0.5rem 1.2rem;
+        font-size: 1rem;
+        cursor: pointer;
+        z-index: 100;
+        transition: background 0.2s;
+      }
+      .dark-mode-toggle:hover {
+        background: #1a237e;
+        color: #fff;
+      }
+      /* Modo oscuro profesional con gradientes y sombras AVANZADO */
+      body.dark-mode {
+        background: linear-gradient(
+          135deg,
+          #0f1419 0%,
+          #1a202c 25%,
+          #2d3748 50%,
+          #1a202c 75%,
+          #0f1419 100%
+        );
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+        color: #e2e8f0;
+        position: relative;
+      }
 
-      constante canvas=documento.getElementById('partículas-bg'); constante ctx=canvas.getContext('2d'); dejar partículas=Array.from({longitud:40},()=>({x:Math.random()*ventana.anchointerior,y:Math.random()*ventana.altointerior,r:Math.random()*2+1,d:Math.random()*1+.5}));función drawParticles(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#FFC10788';partículas.forEach(p=>{ctx.beginPath();ctx.arc(px,py,pr,0,Math.PI*2);ctx.fill();p.y+=pd;if(py>window.innerHeight){py=0;px=Math.random()*window.innerWidth;}});requestAnimationFrame(drawParticles);}función resizeCanvas(){canvas.width=ventana.innerWidth;canvas.height=ventana.innerHeight;}ventana.addEventListener('resize',resizeCanvas);resizeCanvas();drawParticles();
-    </ script >
-  </ cuerpo >
+      /* Animación de fondo dinámico */
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* Efecto glassmorphism para tarjetas en modo oscuro */
+      body.dark-mode .stat-card {
+        background: rgba(45, 55, 72, 0.7);
+        backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid rgba(255, 193, 7, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          0 0 0 1px rgba(255, 193, 7, 0.1);
+        color: #e2e8f0;
+      }
+
+      body.dark-mode .stat-card:hover {
+        background: rgba(74, 85, 104, 0.8);
+        border: 1px solid rgba(255, 193, 7, 0.4);
+        box-shadow: 0 12px 40px rgba(255, 193, 7, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.15),
+          0 0 0 1px rgba(255, 193, 7, 0.2);
+        transform: translateY(-8px) scale(1.02);
+      }
+
+      /* Mejoras para el modo oscuro de texto */
+      body.dark-mode h1,
+      body.dark-mode h2,
+      body.dark-mode h3 {
+        color: #ffd60a;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5),
+          0 0 10px rgba(255, 214, 10, 0.3);
+      }
+
+      /* Efectos de neón para números animados en modo oscuro */
+      body.dark-mode .animated-number {
+        text-shadow: 0 0 10px rgba(255, 193, 7, 0.8),
+          0 0 20px rgba(255, 193, 7, 0.4), 0 0 30px rgba(255, 193, 7, 0.2);
+      }
+      body.dark-mode .ai-output-box {
+        background: linear-gradient(145deg, #1a202c 0%, #2d3748 100%);
+        color: #ffd60a;
+        border-left: 4px solid #ffd60a;
+        box-shadow: 0 4px 20px rgba(255, 214, 10, 0.1);
+      }
+      body.dark-mode .nav-arrow-btn {
+        background: linear-gradient(145deg, #ffc107 0%, #ffb300 100%);
+        color: #1a202c;
+        box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+      }
+      body.dark-mode .nav-arrow-btn:hover {
+        background: linear-gradient(145deg, #ffb300 0%, #ff8f00 100%);
+        color: #fff;
+        box-shadow: 0 6px 20px rgba(255, 143, 0, 0.4);
+      }
+      body.dark-mode .restart-btn {
+        background: linear-gradient(145deg, #1a237e 0%, #3f51b5 100%);
+        color: #ffd60a;
+        box-shadow: 0 4px 15px rgba(26, 35, 126, 0.3);
+      }
+      body.dark-mode .restart-btn:hover {
+        background: linear-gradient(145deg, #3f51b5 0%, #1a237e 100%);
+        color: #fff;
+        box-shadow: 0 6px 20px rgba(63, 81, 181, 0.4);
+      }
+      body.dark-mode .progress-bar {
+        background: #2d3748;
+        border: 1px solid #4a5568;
+      }
+      body.dark-mode .progress-bar-inner {
+        background: linear-gradient(90deg, #ffd60a, #ff8f00);
+        box-shadow: 0 0 10px rgba(255, 214, 10, 0.5);
+      }
+      .loader {
+        border: 4px solid #e0e0e0;
+        border-top: 4px solid #ffc107;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slide-in-down {
+        from {
+          transform: translateY(-40px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      @keyframes zoom-in {
+        from {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .animate-fade-in {
+        animation: fade-in 1s ease;
+      }
+      .animate-slide-in-down {
+        animation: slide-in-down 1s ease;
+      }
+      .animate-zoom-in {
+        animation: zoom-in 1s ease;
+      }
+      /* Barras de atributos mejoradas con gradientes y animaciones */
+      .attribute-bar {
+        background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e0 100%);
+        border-radius: 25px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .attribute-bar-fill {
+        background: linear-gradient(
+          90deg,
+          #ffd60a 0%,
+          #ff8f00 50%,
+          #ff6f00 100%
+        );
+        height: 100%;
+        border-radius: 25px;
+        position: relative;
+        transition: width 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        box-shadow: 0 2px 8px rgba(255, 214, 10, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      }
+      .attribute-bar-fill::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 50%;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.3) 0%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        border-radius: 25px 25px 0 0;
+      }
+      .attribute-bar-fill::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: -50px;
+        width: 50px;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.6) 50%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        animation: shimmer 2s infinite;
+      }
+      .attribute-bar:hover .attribute-bar-fill {
+        background: linear-gradient(
+          90deg,
+          #ff8f00 0%,
+          #ff6f00 50%,
+          #e65100 100%
+        );
+        box-shadow: 0 4px 16px rgba(255, 143, 0, 0.5),
+          inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        transform: scaleY(1.1);
+      }
+      @keyframes shimmer {
+        0% {
+          transform: translateX(-100px);
+        }
+        100% {
+          transform: translateX(300px);
+        }
+      }
+
+      /* Modo oscuro para barras de atributos */
+      body.dark-mode .attribute-bar {
+        background: linear-gradient(90deg, #2d3748 0%, #4a5568 100%);
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      body.dark-mode .attribute-bar-fill {
+        background: linear-gradient(
+          90deg,
+          #ffd60a 0%,
+          #ffb300 50%,
+          #ff8f00 100%
+        );
+        box-shadow: 0 2px 8px rgba(255, 214, 10, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      }
+      /* End of added styles */
+
+      /* Estilos para botella SVG */
+      .wine-bottle-container {
+        perspective: 1000px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .wine-bottle {
+        transition: transform 0.5s ease;
+        filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+      }
+      .wine-bottle:hover {
+        transform: rotateY(15deg) scale(1.05);
+        filter: drop-shadow(0 15px 40px rgba(255, 193, 7, 0.3));
+      }
+      .bottle-body {
+        transition: filter 0.3s ease;
+      }
+      .wine-bottle:hover .bottle-body {
+        filter: brightness(1.1);
+      }
+
+      /* Modo oscuro para botella */
+      body.dark-mode .wine-bottle {
+        filter: drop-shadow(0 10px 30px rgba(255, 214, 10, 0.2));
+      }
+      body.dark-mode .wine-bottle:hover {
+        filter: drop-shadow(0 15px 40px rgba(255, 214, 10, 0.4));
+      }
+
+      /* Tooltips premium animados */
+      .tooltip {
+        position: relative;
+        cursor: help;
+      }
+      .tooltip::before {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(145deg, #1a237e 0%, #2d3748 100%);
+        color: #ffd60a;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+      }
+      .tooltip::after {
+        content: "";
+        position: absolute;
+        bottom: 115%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 5px solid transparent;
+        border-top-color: #1a237e;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1000;
+      }
+      .tooltip:hover::before,
+      .tooltip:hover::after {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(-5px);
+      }
+
+      /* Efectos de pulso para números importantes */
+      .pulse-effect {
+        animation: pulseGlow 2s ease-in-out infinite;
+      }
+      @keyframes pulseGlow {
+        0%,
+        100% {
+          box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+        }
+        50% {
+          box-shadow: 0 0 20px rgba(255, 193, 7, 0.8),
+            0 0 30px rgba(255, 193, 7, 0.4);
+        }
+      }
+
+      /* Efectos de typing para textos */
+      .typing-effect {
+        overflow: hidden;
+        border-right: 2px solid #ffc107;
+        white-space: nowrap;
+        animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+      }
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+      @keyframes blink-caret {
+        from,
+        to {
+          border-color: transparent;
+        }
+        50% {
+          border-color: #ffc107;
+        }
+      }
+
+      /* Efectos parallax sutil para fondos */
+      .parallax-element {
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      /* Microinteracciones para iconos */
+      .micro-bounce:hover {
+        animation: microBounce 0.6s ease;
+      }
+      @keyframes microBounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+
+      /* Efectos de cristal/glassmorphism para elementos flotantes */
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Modo oscuro para tooltips */
+      body.dark-mode .tooltip::before {
+        background: linear-gradient(145deg, #ffd60a 0%, #ffb300 100%);
+        color: #1a237e;
+      }
+      body.dark-mode .tooltip::after {
+        border-top-color: #ffd60a;
+      }
+
+      /* Hover effects premium para tarjetas */
+      .premium-hover {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+      .premium-hover::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          45deg,
+          transparent,
+          rgba(255, 193, 7, 0.1),
+          transparent
+        );
+        transform: rotate(45deg);
+        transition: all 0.4s ease;
+        opacity: 0;
+      }
+      .premium-hover:hover::before {
+        animation: shimmerSweep 1s ease-out;
+      }
+      @keyframes shimmerSweep {
+        0% {
+          transform: translateX(-100%) translateY(-100%) rotate(45deg);
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(100%) translateY(100%) rotate(45deg);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body class="text-gray-800">
+    <button
+      class="dark-mode-toggle"
+      aria-label="Alternar modo oscuro"
+      id="darkModeToggle"
+    >
+      🌙
+    </button>
+    <main role="main">
+      <div class="progress-bar" aria-label="Progreso de la presentación">
+        <div
+          class="progress-bar-inner"
+          id="progressBarInner"
+          style="width: 0%"
+        ></div>
+      </div>
+      <div class="nav-arrows" aria-label="Navegación por pasos">
+        <button
+          class="nav-arrow-btn"
+          id="arrowLeft"
+          aria-label="Anterior"
+          tabindex="0"
+        >
+          ←
+        </button>
+        <button
+          class="nav-arrow-btn"
+          id="arrowRight"
+          aria-label="Siguiente"
+          tabindex="0"
+        >
+          →
+        </button>
+        <button
+          class="restart-btn"
+          id="restartBtn"
+          aria-label="Reiniciar presentación"
+          tabindex="0"
+        >
+          Reiniciar
+        </button>
+      </div>
+      <!-- PALETTE: Andean Sunrise -->
+      <!-- PRIMARY: #FFC107 (Golden Yellow) -->
+      <!-- SECONDARY: #E65100 (Deep Orange) -->
+      <!-- ACCENT: #1A237E (Indigo) -->
+      <!-- TEXT: #37474F (Blue Grey) -->
+
+      <!-- JUSTIFICATION: NEITHER Mermaid JS NOR SVG were used in this output. All diagrams are built with HTML/CSS and all charts with Chart.js on a Canvas element. -->
+
+      <!-- NARRATIVE PLAN: -->
+      <!-- 1. Hero: Introduce "Oca Divina" and its market acceptance with a key stat. -->
+      <!-- 2. Market Pulse: Visualize survey data (demographics, perception, pricing) to validate the business concept. -->
+      <!-- 3. Financial Blueprint: Break down the production costs to show financial viability. -->
+      <!-- 4. Engine of Efficiency: Showcase key productivity indicators to highlight operational strength. -->
+      <!-- 5. Process Flow: Detail the production journey from tuber to bottle using a styled HTML flowchart. -->
+      <!-- 6. Go-to-Market: Summarize the 4P marketing strategy. -->
+
+      <!-- VISUALIZATION CHOICES: -->
+      <!-- 1. Purchase Intent -> Single Big Number -> Goal: Inform -> Justification: Immediate high-impact validation. -->
+      <!-- 2. Target Age Demo -> Donut Chart (Chart.js/Canvas) -> Goal: Composition -> Justification: Clearly shows the primary age group distribution. -->
+      <!-- 3. Innovation Perception -> Bar Chart (Chart.js/Canvas) -> Goal: Compare -> Justification: Effectively compares ratings. -->
+      <!-- 4. Suggested Price -> Donut Chart (Chart.js/Canvas) -> Goal: Composition -> Justification: Visualizes consumer pricing expectations. -->
+      <!-- 5. Cost Breakdown -> Donut Chart (Chart.js/Canvas) -> Goal: Composition -> Justification: Clearly shows the weight of each cost component. -->
+      <!-- 6. Productivity Indicators -> Stat Cards (HTML/CSS) -> Goal: Inform -> Justification: Presents multiple key metrics in a digestible format. -->
+      <!-- 7. Production Process -> Flowchart (HTML/CSS) -> Goal: Organize -> Justification: Visually represents a sequence of steps without SVG/Mermaid. -->
+      <!-- 8. 4P's -> Grid Layout (HTML/CSS) -> Goal: Organize -> Justification: Structured and balanced presentation of strategic elements. -->
+
+      <div class="container mx-auto p-4 md:p-8">
+        <!-- Section 1: Hero -->
+        <header class="text-center mb-12 md:mb-16 animate-fade-in">
+          <h1
+            class="text-4xl md:text-6xl font-bold text-[#1A237E] mb-4 animate-slide-in-down"
+          >
+            Oca Divina
+          </h1>
+          <p
+            class="text-xl md:text-2xl text-[#37474F] max-w-3xl mx-auto sequenced-element animate-fade-in"
+          >
+            Un vino innovador de los Andes peruanos. Analizamos la viabilidad y
+            el potencial de un producto que fusiona tradición y modernidad.
+          </p>
+          <div
+            class="w-full flex justify-center mt-4 sequenced-element wine-bottle-container"
+          >
+            <svg
+              class="wine-bottle"
+              width="80"
+              height="120"
+              viewBox="0 0 80 120"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient
+                  id="bottleGradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop
+                    offset="0%"
+                    style="stop-color: #2a5c2a; stop-opacity: 1"
+                  />
+                  <stop
+                    offset="50%"
+                    style="stop-color: #1a4a1a; stop-opacity: 1"
+                  />
+                  <stop
+                    offset="100%"
+                    style="stop-color: #0f2f0f; stop-opacity: 1"
+                  />
+                </linearGradient>
+                <linearGradient
+                  id="wineGradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop
+                    offset="0%"
+                    style="stop-color: #8b0000; stop-opacity: 0.9"
+                  />
+                  <stop
+                    offset="50%"
+                    style="stop-color: #dc143c; stop-opacity: 0.8"
+                  />
+                  <stop
+                    offset="100%"
+                    style="stop-color: #b22222; stop-opacity: 0.9"
+                  />
+                </linearGradient>
+                <linearGradient
+                  id="labelGradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop
+                    offset="0%"
+                    style="stop-color: #ffc107; stop-opacity: 1"
+                  />
+                  <stop
+                    offset="100%"
+                    style="stop-color: #ffb300; stop-opacity: 1"
+                  />
+                </linearGradient>
+                <linearGradient
+                  id="bottleGradientDark"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop
+                    offset="0%"
+                    style="stop-color: #4a5568; stop-opacity: 1"
+                  />
+                  <stop
+                    offset="50%"
+                    style="stop-color: #2d3748; stop-opacity: 1"
+                  />
+                  <stop
+                    offset="100%"
+                    style="stop-color: #1a202c; stop-opacity: 1"
+                  />
+                </linearGradient>
+              </defs>
+              <rect
+                x="25"
+                y="35"
+                width="30"
+                height="75"
+                rx="3"
+                fill="url(#bottleGradient)"
+                class="bottle-body"
+              />
+              <rect
+                x="32"
+                y="20"
+                width="16"
+                height="20"
+                fill="url(#bottleGradient)"
+                class="bottle-neck"
+              />
+              <rect
+                x="27"
+                y="40"
+                width="26"
+                height="65"
+                rx="2"
+                fill="url(#wineGradient)"
+                opacity="0.8"
+              />
+              <rect
+                x="28"
+                y="55"
+                width="24"
+                height="20"
+                rx="2"
+                fill="url(#labelGradient)"
+                class="wine-label"
+              />
+              <text
+                x="40"
+                y="62"
+                text-anchor="middle"
+                font-size="6"
+                font-weight="bold"
+                fill="#1A237E"
+              >
+                OCA
+              </text>
+              <text
+                x="40"
+                y="70"
+                text-anchor="middle"
+                font-size="5"
+                fill="#1A237E"
+              >
+                DIVINA
+              </text>
+              <rect x="33" y="15" width="14" height="8" rx="1" fill="#8B4513" />
+              <rect
+                x="30"
+                y="25"
+                width="3"
+                height="70"
+                rx="1.5"
+                fill="rgba(255,255,255,0.3)"
+                opacity="0.6"
+              />
+              <ellipse cx="40" cy="115" rx="20" ry="3" fill="rgba(0,0,0,0.2)" />
+            </svg>
+          </div>
+          <button
+            id="downloadPDF"
+            class="mt-6 px-6 py-2 bg-[#1A237E] text-white font-bold rounded-lg hover:bg-[#FFC107] hover:text-[#1A237E] transition-colors duration-300 shadow"
+            aria-label="Descargar infografía en PDF"
+          >
+            Descargar PDF
+          </button>
+        </header>
+
+        <!-- Section 2: Market Pulse -->
+        <section class="mb-12 md:mb-16">
+          <h2
+            class="text-3xl font-bold text-center mb-8 text-[#1A237E] sequenced-element"
+          >
+            El Pulso del Mercado: ¿Quién quiere Oca Divina?
+          </h2>
+          <p
+            class="text-center max-w-2xl mx-auto mb-10 text-[#37474F] sequenced-element"
+          >
+            Los datos de la encuesta revelan un fuerte interés del consumidor,
+            validando la propuesta de valor del producto antes de su lanzamiento
+            a gran escala.
+          </p>
+
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center"
+          >
+            <div class="stat-card lg:col-span-1 sequenced-element">
+              <div
+                class="text-7xl font-bold text-[#E65100] animated-number"
+                data-target-value="87"
+                data-is-percentage="true"
+              >
+                0%
+              </div>
+              <p class="text-xl mt-2 text-[#37474F]">
+                manifestó su intención de comprar el producto.
+              </p>
+            </div>
+
+            <div
+              class="stat-card lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8 sequenced-element"
+              data-chart-id="ageChart,innovationChart"
+            >
+              <div>
+                <h3 class="text-xl font-semibold mb-4 text-[#1A237E]">
+                  Público Objetivo Principal
+                </h3>
+                <div class="chart-container h-64 sm:h-72">
+                  <canvas id="ageChart"></canvas>
+                </div>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold mb-4 text-[#1A237E]">
+                  Percepción de Innovación
+                </h3>
+                <div class="chart-container h-64 sm:h-72">
+                  <canvas id="innovationChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="stat-card md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-8 items-center sequenced-element"
+              data-chart-id="priceChart"
+            >
+              <div>
+                <h3 class="text-xl font-semibold mb-4 text-[#1A237E]">
+                  Precio Sugerido por los Consumidores
+                </h3>
+                <div class="chart-container">
+                  <canvas id="priceChart"></canvas>
+                </div>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold mb-2 text-[#1A237E]">
+                  Atributos Más Valorados
+                </h3>
+                <p class="text-sm text-[#37474F] mb-4">
+                  Los consumidores priorizan la autenticidad del sabor y el
+                  origen del producto.
+                </p>
+                <div class="space-y-4 text-left">
+                  <div class="attribute-bar h-8 relative">
+                    <div
+                      class="attribute-bar-fill text-xs font-bold text-white text-center leading-8"
+                      style="width: 0%"
+                      data-width="95"
+                      title="Sabor auténtico y diferenciador del producto"
+                    >
+                      🍇 Sabor único y auténtico
+                    </div>
+                  </div>
+                  <div class="attribute-bar h-8 relative">
+                    <div
+                      class="attribute-bar-fill text-xs font-bold text-white text-center leading-8"
+                      style="width: 0%"
+                      data-width="85"
+                      title="Materia prima natural y sostenible"
+                    >
+                      🌿 Origen natural y sostenible
+                    </div>
+                  </div>
+                  <div class="attribute-bar h-8 relative">
+                    <div
+                      class="attribute-bar-fill text-xs font-bold text-white text-center leading-8"
+                      style="width: 0%"
+                      data-width="70"
+                      title="Aporta beneficios nutricionales"
+                    >
+                      💚 Beneficios nutricionales
+                    </div>
+                  </div>
+                  <div class="attribute-bar h-8 relative">
+                    <div
+                      class="attribute-bar-fill text-xs font-bold text-white text-center leading-8"
+                      style="width: 0%"
+                      data-width="60"
+                      title="Elaboración artesanal cuidada"
+                    >
+                      🎨 Producción artesanal
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 3: Financial Blueprint -->
+        <section class="mb-12 md:mb-16">
+          <h2
+            class="text-3xl font-bold text-center mb-8 text-[#1A237E] sequenced-element"
+          >
+            El Plan Financiero: Costos y Viabilidad
+          </h2>
+          <p
+            class="text-center max-w-2xl mx-auto mb-10 text-[#37474F] sequenced-element"
+          >
+            Un análisis detallado de los costos por lote (500 litros) revela una
+            estructura manejable y un camino claro hacia la rentabilidad.
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="stat-card sequenced-element" data-chart-id="costChart">
+              <h3 class="text-xl font-semibold mb-4 text-[#1A237E]">
+                Desglose del Costo por Botella (S/ 13.63)
+              </h3>
+              <div class="chart-container">
+                <canvas id="costChart"></canvas>
+              </div>
+              <button
+                id="costInsightBtn"
+                class="mt-4 px-6 py-2 bg-[#E65100] text-white font-bold rounded-lg hover:bg-[#FF7043] transition-colors duration-300 shadow"
+              >
+                Insight de Costos ✨
+              </button>
+              <div id="costInsightOutput" class="ai-output-box hidden"></div>
+              <div
+                id="costInsightLoading"
+                class="hidden text-center mt-2 text-[#1A237E] font-semibold"
+              >
+                Cargando...
+              </div>
+            </div>
+            <div class="space-y-6">
+              <div class="stat-card sequenced-element">
+                <div
+                  class="text-4xl font-bold text-[#E65100] animated-number"
+                  data-target-value="9094.00"
+                  data-prefix="S/ "
+                  data-suffix=""
+                >
+                  S/ 0.00
+                </div>
+                <p class="text-lg mt-2 text-[#37474F]">
+                  Costo Total Estimado por Lote
+                </p>
+              </div>
+              <div class="stat-card sequenced-element">
+                <div
+                  class="text-4xl font-bold text-[#E65100] animated-number"
+                  data-target-value="18.19"
+                  data-prefix="S/ "
+                  data-suffix=""
+                >
+                  S/ 0.00
+                </div>
+                <p class="text-lg mt-2 text-[#37474F]">
+                  Costo por Litro Producido
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 4: Engine of Efficiency -->
+        <section class="mb-12 md:mb-16">
+          <h2
+            class="text-3xl font-bold text-center mb-8 text-[#1A237E] sequenced-element"
+          >
+            El Motor de la Eficiencia: Indicadores Clave
+          </h2>
+          <p
+            class="text-center max-w-2xl mx-auto mb-10 text-[#37474F] sequenced-element"
+          >
+            La productividad no es solo un objetivo, es la medida de nuestra
+            optimización. Estos indicadores muestran cómo cada recurso se
+            transforma en valor.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="stat-card sequenced-element">
+              <div
+                class="text-4xl font-bold text-[#1A237E] animated-number"
+                data-target-value="3.30"
+                data-prefix="S/ "
+                data-suffix=""
+              >
+                S/ 0.00
+              </div>
+              <p class="text-md mt-2 text-[#37474F]">
+                Generados por cada S/ 1 invertido en la producción total.
+              </p>
+              <span class="text-xs font-bold text-gray-500 block mt-2"
+                >PRODUCTIVIDAD GLOBAL</span
+              >
+            </div>
+            <div class="stat-card sequenced-element">
+              <div
+                class="text-4xl font-bold text-[#1A237E] animated-number"
+                data-target-value="16.68"
+                data-prefix="S/ "
+                data-suffix=""
+              >
+                S/ 0.00
+              </div>
+              <p class="text-md mt-2 text-[#37474F]">
+                Generados por cada S/ 1 invertido en mano de obra.
+              </p>
+              <span class="text-xs font-bold text-gray-500 block mt-2"
+                >PRODUCTIVIDAD LABORAL</span
+              >
+            </div>
+            <div class="stat-card sequenced-element">
+              <div
+                class="text-4xl font-bold text-[#1A237E] animated-number"
+                data-target-value="12.00"
+                data-prefix="S/ "
+                data-suffix=""
+              >
+                S/ 0.00
+              </div>
+              <p class="text-md mt-2 text-[#37474F]">
+                Generados por cada S/ 1 invertido en la oca.
+              </p>
+              <span class="text-xs font-bold text-gray-500 block mt-2"
+                >PRODUCTIVIDAD MATERIA PRIMA</span
+              >
+            </div>
+            <div class="stat-card sequenced-element">
+              <div
+                class="text-4xl font-bold text-[#1A237E] animated-number"
+                data-target-value="5"
+                data-prefix=""
+                data-suffix=" L"
+              >
+                0 L
+              </div>
+              <p class="text-md mt-2 text-[#37474F]">
+                De vino producidos por cada hora de trabajo directo.
+              </p>
+              <span class="text-xs font-bold text-gray-500 block mt-2"
+                >PRODUCTIVIDAD FÍSICA</span
+              >
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 5: Production Process -->
+        <section class="mb-12 md:mb-16">
+          <h2
+            class="text-3xl font-bold text-center mb-12 text-[#1A237E] sequenced-element"
+          >
+            De los Andes a la Botella: Nuestro Proceso
+          </h2>
+          <div
+            class="relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8"
+          >
+            <div
+              class="relative flex flex-col items-center flow-step sequenced-element"
+            >
+              <div
+                class="w-16 h-16 rounded-full bg-[#FFC107] flex items-center justify-center text-2xl text-white mb-3"
+              >
+                🏔️
+              </div>
+              <p class="font-semibold text-center">Recepción y Selección</p>
+            </div>
+            <div
+              class="relative flex flex-col items-center flow-step sequenced-element"
+            >
+              <div
+                class="w-16 h-16 rounded-full bg-[#FFC107] flex items-center justify-center text-2xl text-white mb-3"
+              >
+                ☀️
+              </div>
+              <p class="font-semibold text-center">Soleado (Curado al sol)</p>
+            </div>
+            <div
+              class="relative flex flex-col items-center flow-step sequenced-element"
+            >
+              <div
+                class="w-16 h-16 rounded-full bg-[#FFC107] flex items-center justify-center text-2xl text-white mb-3"
+              >
+                🔥
+              </div>
+              <p class="font-semibold text-center">Cocción y Prensado</p>
+            </div>
+            <div
+              class="relative flex flex-col items-center flow-step sequenced-element"
+            >
+              <div
+                class="w-16 h-16 rounded-full bg-[#FFC107] flex items-center justify-center text-2xl text-white mb-3"
+              >
+                ⚗️
+              </div>
+              <p class="font-semibold text-center">
+                Fermentación y Clarificación
+              </p>
+            </div>
+            <div
+              class="relative flex flex-col items-center col-span-2 md:col-span-1 lg:col-span-1 flow-step sequenced-element"
+            >
+              <div
+                class="w-16 h-16 rounded-full bg-[#FFC107] flex items-center justify-center text-2xl text-white mb-3"
+              >
+                🍾
+              </div>
+              <p class="font-semibold text-center">Embotellado y Etiquetado</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 6: 4 Ps -->
+        <section>
+          <h2
+            class="text-3xl font-bold text-center mb-8 text-[#1A237E] sequenced-element"
+          >
+            Estrategia de Mercado: Las 4 P's
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="stat-card text-left sequenced-element">
+              <h3 class="text-2xl font-bold mb-3 text-[#E65100]">Producto</h3>
+              <ul class="list-disc list-inside space-y-2 text-[#37474F]">
+                <li>Vino innovador de oca</li>
+                <li>Sabor único y auténtico</li>
+                <li>Origen andino y sostenible</li>
+                <li>Presentación premium 750ml</li>
+              </ul>
+              <div class="w-full flex justify-center mt-4 sequenced-element">
+                <img
+                  src="https://placehold.co/150x200/8B0000/FFFFFF?text=Producto+Oca"
+                  alt="Botella de Vino Oca Divina"
+                  class="rounded-lg shadow-md w-auto h-32 object-cover"
+                  onerror="this.onerror=null;this.src='https://placehold.co/150x200/CCCCCC/000000?text=Imagen+No+Disponible';"
+                  aria-label="Imagen de la botella de vino Oca Divina"
+                />
+              </div>
+            </div>
+            <div class="stat-card text-left sequenced-element">
+              <h3 class="text-2xl font-bold mb-3 text-[#E65100]">Precio</h3>
+              <ul class="list-disc list-inside space-y-2 text-[#37474F]">
+                <li>Estrategia premium</li>
+                <li>Costo botella: S/ 13.63</li>
+                <li>PVP: S/ 45 - S/ 55</li>
+                <li>Márgenes saludables</li>
+              </ul>
+            </div>
+            <div class="stat-card text-left sequenced-element">
+              <h3 class="text-2xl font-bold mb-3 text-[#E65100]">Plaza</h3>
+              <ul class="list-disc list-inside space-y-2 text-[#37474F]">
+                <li>Tiendas gourmet especializadas</li>
+                <li>Restaurantes y hoteles (HoReCa)</li>
+                <li>E-commerce directo</li>
+                <li>Expansión a supermercados</li>
+              </ul>
+            </div>
+            <div class="stat-card text-left sequenced-element">
+              <h3 class="text-2xl font-bold mb-3 text-[#E65100]">Promoción</h3>
+              <ul class="list-disc list-inside space-y-2 text-[#37474F]">
+                <li>Storytelling de marca</li>
+                <li>Marketing digital y RR.SS.</li>
+                <li>Alianzas con chefs</li>
+                <li>Eventos de cata y ferias</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <footer class="text-center p-6 mt-12 bg-[#1A237E] text-white">
+        <p>&copy; 2025 ANDINA SPIRITUS S.A.C. - Proyecto "Oca Divina".</p>
+      </footer>
+
+      <div
+        class="fixed bottom-4 right-4 bg-[#1A237E] text-white px-4 py-2 rounded-full shadow-lg text-sm z-50"
+      >
+        Usar ← → para navegar. Desliza en móvil.
+      </div>
+    </main>
+
+    <script>
+      const FONT_COLOR = "#37474F";
+      const BORDER_COLOR = "#E5E7EB";
+      const PALETTE = ["#FFC107", "#E65100", "#1A237E", "#FF7043", "#FFA000"];
+
+      const wrapLabel = (label) => {
+        const maxLineLength = 16;
+        if (typeof label !== "string" || label.length <= maxLineLength) {
+          return label;
+        }
+        const words = label.split(" ");
+        const lines = [];
+        let currentLine = "";
+        for (const word of words) {
+          if (
+            (currentLine + " " + word).length > maxLineLength &&
+            currentLine.length > 0
+          ) {
+            lines.push(currentLine);
+            currentLine = word;
+          } else {
+            currentLine += (currentLine.length === 0 ? "" : " ") + word;
+          }
+        }
+        lines.push(currentLine);
+        return lines;
+      };
+
+      const tooltipTitleCallback = (tooltipItems) => {
+        const item = tooltipItems[0];
+        let label = item.chart.data.labels[item.dataIndex];
+        if (Array.isArray(label)) {
+          return label.join(" ");
+        } else {
+          return label;
+        }
+      };
+
+      const defaultOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: "bottom",
+            labels: {
+              color: FONT_COLOR,
+              font: { size: 12 },
+            },
+          },
+          tooltip: {
+            callbacks: {
+              title: tooltipTitleCallback,
+            },
+          },
+        },
+        color: FONT_COLOR,
+        animation: {
+          duration: 1000, // Animation duration for charts
+          easing: "easeOutQuart", // Easing function for animation
+        },
+      };
+
+      let chartInstances = {}; // To store chart instances after creation
+
+      const chartConfigs = {
+        ageChart: {
+          type: "doughnut",
+          data: {
+            labels: [
+              "23-30 años",
+              "31-40 años",
+              "18-22 años",
+              "41-50 años",
+              "51+ años",
+            ],
+            datasets: [
+              {
+                label: "Distribución por Edad",
+                data: [38, 27, 20, 11, 4],
+                backgroundColor: PALETTE,
+                borderColor: "#FFFFFF",
+                borderWidth: 2,
+              },
+            ],
+          },
+          options: { ...defaultOptions },
+        },
+        innovationChart: {
+          type: "bar",
+          data: {
+            labels: [
+              "Muy innovador",
+              "Bastante",
+              "Medianamente",
+              "Poco",
+              "Nada",
+            ],
+            datasets: [
+              {
+                label: "% de Encuestados",
+                data: [45, 32, 21, 1, 1],
+                backgroundColor: PALETTE[0],
+                borderColor: PALETTE[1],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            ...defaultOptions,
+            indexAxis: "y",
+            scales: {
+              x: {
+                grid: {
+                  borderColor: BORDER_COLOR,
+                  color: BORDER_COLOR,
+                },
+                ticks: { color: FONT_COLOR },
+              },
+              y: {
+                grid: {
+                  display: false,
+                  borderColor: BORDER_COLOR,
+                },
+                ticks: { color: FONT_COLOR },
+              },
+            },
+            plugins: {
+              legend: { display: false },
+              tooltip: { callbacks: { title: tooltipTitleCallback } },
+            },
+          },
+        },
+        priceChart: {
+          type: "doughnut",
+          data: {
+            labels: ["S/ 40-60", "Menos de S/ 40", "S/ 60-80", "Más de S/ 80"],
+            datasets: [
+              {
+                label: "Precio Sugerido",
+                data: [49, 35, 12, 4],
+                backgroundColor: PALETTE,
+                borderColor: "#FFFFFF",
+                borderWidth: 2,
+              },
+            ],
+          },
+          options: { ...defaultOptions },
+        },
+        costChart: {
+          type: "doughnut",
+          data: {
+            labels: [
+              "Empaques",
+              "Materia Prima",
+              "Mano de Obra",
+              "CIF",
+              "Operativos",
+            ],
+            datasets: [
+              {
+                label: "Costo por Botella",
+                data: [29.5, 26.1, 18.0, 14.3, 3.0],
+                backgroundColor: PALETTE.slice(0, 5).reverse(),
+                borderColor: "#FFFFFF",
+                borderWidth: 2,
+              },
+            ],
+          },
+          options: {
+            ...defaultOptions,
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: {
+                  color: FONT_COLOR,
+                  font: { size: 12 },
+                },
+              },
+              tooltip: {
+                callbacks: {
+                  title: tooltipTitleCallback,
+                  label: function (context) {
+                    let label = context.dataset.label || "";
+                    if (label) {
+                      label += ": ";
+                    }
+                    if (context.parsed !== null) {
+                      label += context.parsed.toFixed(1) + "%";
+                    }
+                    return label;
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+
+      function initChart(chartId) {
+        if (!chartInstances[chartId] && chartConfigs[chartId]) {
+          const ctx = document.getElementById(chartId).getContext("2d");
+          chartInstances[chartId] = new Chart(ctx, chartConfigs[chartId]);
+        } else if (chartInstances[chartId]) {
+          chartInstances[chartId].update(); // Re-trigger animation if chart already exists
+        }
+      }
+
+      function destroyChart(chartId) {
+        if (chartInstances[chartId]) {
+          chartInstances[chartId].destroy();
+          delete chartInstances[chartId];
+        }
+      }
+
+      // Animated number counter function (generalized for any number)
+      function animateNumber(
+        element,
+        target,
+        duration = 1500,
+        isPercentage = false,
+        prefix = "",
+        suffix = ""
+      ) {
+        let start = 0;
+        const startTime = performance.now();
+        const initialColor = window.getComputedStyle(element).color;
+        const targetColor = PALETTE[1]; // Deep Orange
+
+        const parseRgb = (rgbString) => {
+          const match = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+          return match
+            ? [parseInt(match[1]), parseInt(match[2]), parseInt(match[3])]
+            : [0, 0, 0];
+        };
+
+        const hexToRgb = (hex) => {
+          const bigint = parseInt(hex.slice(1), 16);
+          return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
+        };
+
+        const startRgb = parseRgb(initialColor);
+        const targetRgb = hexToRgb(targetColor);
+
+        function updateCount(currentTime) {
+          const elapsedTime = currentTime - startTime;
+          const progress = Math.min(elapsedTime / duration, 1);
+          const value = start + (target - start) * progress;
+
+          let displayedValue;
+          if (isPercentage) {
+            displayedValue = `${Math.floor(value)}%`;
+          } else {
+            displayedValue = `${prefix}${value.toFixed(2)}${suffix}`; // Fixed to 2 decimal places for currency
+          }
+          element.textContent = displayedValue;
+
+          const interpolatedR = Math.round(
+            startRgb[0] + (targetRgb[0] - startRgb[0]) * progress
+          );
+          const interpolatedG = Math.round(
+            startRgb[1] + (targetRgb[1] - startRgb[1]) * progress
+          );
+          const interpolatedB = Math.round(
+            startRgb[2] + (targetRgb[2] - startRgb[2]) * progress
+          );
+
+          element.style.color = `rgb(${interpolatedR}, ${interpolatedG}, ${interpolatedB})`;
+
+          if (progress < 1) {
+            requestAnimationFrame(updateCount);
+          } else {
+            element.style.color = targetColor;
+          }
+        }
+        requestAnimationFrame(updateCount);
+      }
+
+      // --- Interactive Presentation Logic ---
+      const sequencedElements = [
+        document.querySelector("header p"), // Header description
+        document.querySelector("header .wine-bottle-container"), // Oca Divina bottle image
+        document.querySelector("section:nth-of-type(1) h2"), // Market Pulse title
+        document.querySelector("section:nth-of-type(1) p"), // Market Pulse description
+        document.querySelector(
+          "section:nth-of-type(1) .stat-card:nth-of-type(1)"
+        ), // 87% stat card
+        document.querySelector(
+          "section:nth-of-type(1) .stat-card:nth-of-type(2)"
+        ), // Age + Innovation charts container
+        document.querySelector(
+          "section:nth-of-type(1) .stat-card:nth-of-type(3)"
+        ), // Price + Attributes container
+        document.querySelector("section:nth-of-type(2) h2"), // Financial Blueprint title
+        document.querySelector("section:nth-of-type(2) p"), // Financial Blueprint description
+        document.querySelector(
+          "section:nth-of-type(2) .stat-card:nth-of-type(1)"
+        ), // Cost chart container + button
+        document.querySelector(
+          "section:nth-of-type(2) .space-y-6 .stat-card:nth-child(1)"
+        ), // Total Cost stat
+        document.querySelector(
+          "section:nth-of-type(2) .space-y-6 .stat-card:nth-child(2)"
+        ), // Cost per Litro stat
+        document.querySelector("section:nth-of-type(3) h2"), // Engine of Efficiency title
+        document.querySelector("section:nth-of-type(3) p"), // Engine of Efficiency description
+        document.querySelector(
+          "section:nth-of-type(3) .grid .stat-card:nth-of-type(1)"
+        ), // Productividad Global
+        document.querySelector(
+          "section:nth-of-type(3) .grid .stat-card:nth-of-type(2)"
+        ), // Productividad Laboral
+        document.querySelector(
+          "section:nth-of-type(3) .grid .stat-card:nth-of-type(3)"
+        ), // Productividad Materia Prima
+        document.querySelector(
+          "section:nth-of-type(3) .grid .stat-card:nth-of-type(4)"
+        ), // Productividad Física
+        document.querySelector("section:nth-of-type(4) h2"), // Production Process title
+        document.querySelector(
+          "section:nth-of-type(4) .flow-step:nth-of-type(1)"
+        ), // Recepción y Selección
+        document.querySelector(
+          "section:nth-of-type(4) .flow-step:nth-of-type(2)"
+        ), // Soleado
+        document.querySelector(
+          "section:nth-of-type(4) .flow-step:nth-of-type(3)"
+        ), // Cocción y Prensado
+        document.querySelector(
+          "section:nth-of-type(4) .flow-step:nth-of-type(4)"
+        ), // Fermentación y Clarificación
+        document.querySelector(
+          "section:nth-of-type(4) .flow-step:nth-of-type(5)"
+        ), // Embotellado y Etiquetado
+        document.querySelector("section:nth-of-type(5) h2"), // 4 P's title
+        document.querySelector(
+          "section:nth-of-type(5) .stat-card:nth-of-type(1)"
+        ), // Producto
+        document.querySelector(
+          "section:nth-of-type(5) .stat-card:nth-of-type(2)"
+        ), // Precio
+        document.querySelector(
+          "section:nth-of-type(5) .stat-card:nth-of-type(3)"
+        ), // Plaza
+        document.querySelector(
+          "section:nth-of-type(5) .stat-card:nth-of-type(4)"
+        ), // Promoción
+      ];
+
+      let currentElementIndex = -1;
+
+      // Add initial hidden class to all sequenced elements
+      sequencedElements.forEach((el) => {
+        if (el) el.classList.add("sequenced-element");
+      });
+
+      function navigate(direction) {
+        let nextIndex = currentElementIndex;
+        if (direction === "right") {
+          nextIndex++;
+        } else if (direction === "left") {
+          nextIndex--;
+        } else {
+          return;
+        }
+
+        // Boundary checks for nextIndex for revealing/hiding
+        if (direction === "right" && nextIndex < sequencedElements.length) {
+          const elementToReveal = sequencedElements[nextIndex];
+          if (elementToReveal) {
+            elementToReveal.classList.remove("sequenced-element");
+            elementToReveal.classList.add("is-visible");
+
+            // Special handling for animated numbers
+            if (elementToReveal.querySelector(".animated-number")) {
+              const numberEl =
+                elementToReveal.querySelector(".animated-number");
+              const targetValue = parseFloat(numberEl.dataset.targetValue);
+              const isPercentage = numberEl.dataset.isPercentage === "true";
+              const prefix = numberEl.dataset.prefix || "";
+              const suffix = numberEl.dataset.suffix || "";
+              animateNumber(
+                numberEl,
+                targetValue,
+                1500,
+                isPercentage,
+                prefix,
+                suffix
+              );
+            }
+
+            // Initialize charts if present
+            const chartIds = elementToReveal.dataset.chartId;
+            if (chartIds) {
+              chartIds.split(",").forEach((id) => initChart(id.trim()));
+            }
+
+            elementToReveal.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+            currentElementIndex = nextIndex;
+          }
+        } else if (direction === "left" && currentElementIndex >= 0) {
+          const elementToHide = sequencedElements[currentElementIndex];
+          if (elementToHide) {
+            elementToHide.classList.remove("is-visible");
+            elementToHide.classList.add("sequenced-element");
+
+            // Reset animated numbers when hiding
+            if (elementToHide.querySelector(".animated-number")) {
+              const numberEl = elementToHide.querySelector(".animated-number");
+              const isPercentage = numberEl.dataset.isPercentage === "true";
+              const prefix = numberEl.dataset.prefix || "";
+              const suffix = numberEl.dataset.suffix || "";
+              numberEl.textContent = isPercentage
+                ? "0%"
+                : `${prefix}0.00${suffix}`;
+              numberEl.style.color = FONT_COLOR; // Reset color
+            }
+
+            // Destroy charts if present
+            const chartIds = elementToHide.dataset.chartId;
+            if (chartIds) {
+              chartIds.split(",").forEach((id) => destroyChart(id.trim()));
+            }
+          }
+
+          currentElementIndex = nextIndex; // Update index
+
+          // Scroll to the new current element, or top if at the beginning
+          if (
+            currentElementIndex !== -1 &&
+            sequencedElements[currentElementIndex]
+          ) {
+            // Check if element exists before scrolling to it
+            sequencedElements[currentElementIndex].scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+          } else if (currentElementIndex === -1) {
+            // If currentElementIndex is -1, means we are at the very beginning, scroll to header
+            document
+              .querySelector("header")
+              .scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }
+      }
+
+      // Keyboard navigation
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowRight") {
+          navigate("right");
+        } else if (event.key === "ArrowLeft") {
+          navigate("left");
+        }
+      });
+
+      // Touch navigation (swipe gestures)
+      let touchstartX = 0;
+      let touchendX = 0;
+      const swipeThreshold = 50; // pixels
+
+      document.body.addEventListener("touchstart", (e) => {
+        touchstartX = e.changedTouches[0].screenX;
+      });
+
+      document.body.addEventListener("touchend", (e) => {
+        touchendX = e.changedTouches[0].screenX;
+        const deltaX = touchendX - touchstartX;
+
+        if (deltaX > swipeThreshold) {
+          // Swiped right -> go back
+          navigate("left");
+        } else if (deltaX < -swipeThreshold) {
+          // Swiped left -> go forward
+          navigate("right");
+        }
+      });
+
+      // Gemini API integration
+      async function callGeminiAPI(prompt, outputElementId, loadingElementId) {
+        const outputDiv = document.getElementById(outputElementId);
+        const loadingDiv = document.getElementById(loadingElementId);
+        outputDiv.classList.add("hidden");
+        loadingDiv.classList.remove("hidden");
+
+        try {
+          let chatHistory = [];
+          chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+          const payload = { contents: chatHistory };
+          const apiKey = "YOUR_GEMINI_API_KEY_HERE"; // Reemplazar con tu API key de Gemini
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+          const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          const result = await response.json();
+          if (
+            result.candidates &&
+            result.candidates.length > 0 &&
+            result.candidates[0].content &&
+            result.candidates[0].content.parts &&
+            result.candidates[0].content.parts.length > 0
+          ) {
+            const text = result.candidates[0].content.parts[0].text;
+            outputDiv.innerHTML = text.replace(/\n/g, "<br>");
+            outputDiv.classList.remove("hidden");
+            addCopyButtonToInsight();
+          } else {
+            outputDiv.innerHTML =
+              "Error al generar la respuesta. Por favor, inténtalo de nuevo.";
+            outputDiv.classList.remove("hidden");
+          }
+        } catch (error) {
+          console.error("Error al llamar a la API de Gemini:", error);
+          outputDiv.innerHTML =
+            "Hubo un problema con la conexión o la API. Inténtalo más tarde.";
+          outputDiv.classList.remove("hidden");
+        } finally {
+          loadingDiv.classList.add("hidden");
+        }
+      }
+
+      // --- Mejoras de accesibilidad y experiencia ---
+      // Modo oscuro
+      const darkModeToggle = document.getElementById("darkModeToggle");
+      darkModeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+        localStorage.setItem(
+          "darkMode",
+          document.body.classList.contains("dark-mode")
+        );
+      });
+      if (localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark-mode");
+      }
+
+      // Barra de progreso
+      function updateProgressBar() {
+        const progress =
+          ((currentElementIndex + 1) / sequencedElements.length) * 100;
+        document.getElementById("progressBarInner").style.width =
+          progress + "%";
+      }
+
+      // Flechas y reinicio
+      document
+        .getElementById("arrowLeft")
+        .addEventListener("click", () => navigate("left"));
+      document
+        .getElementById("arrowRight")
+        .addEventListener("click", () => navigate("right"));
+      document.getElementById("restartBtn").addEventListener("click", () => {
+        // Oculta todos y vuelve al inicio
+        // Oculta todos y vuelve al inicio
+        sequencedElements.forEach((el) => {
+          if (el) {
+            el.classList.remove("is-visible");
+            el.classList.add("sequenced-element");
+          }
+        });
+        currentElementIndex = -1;
+        updateProgressBar();
+        document
+          .querySelector("header")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      // Actualiza barra de progreso y anima barras de atributos en cada navegación
+      const originalNavigate = navigate;
+      navigate = function (direction) {
+        originalNavigate(direction);
+        updateProgressBar();
+
+        // Verificar si estamos en la sección de atributos
+        const currentElement = sequencedElements[currentElementIndex];
+        if (
+          currentElement &&
+          currentElement.querySelector(".attribute-bar-fill")
+        ) {
+          setTimeout(animateAttributeBars, 500);
+        }
+      };
+    </script>
+
+    <!-- Efectos y tooltips en barras de atributos -->
+    <script>
+      document.querySelectorAll(".attribute-bar-fill").forEach((bar, i) => {
+        bar.classList.add("bar-animate");
+        bar.setAttribute("tabindex", "0");
+        bar.setAttribute("role", "progressbar");
+
+        // Añadir efecto hover
+        bar.addEventListener("mouseenter", () => {
+          bar.style.transform = "scaleY(1.1)";
+          bar.style.transition = "transform 0.3s ease";
+        });
+
+        bar.addEventListener("mouseleave", () => {
+          bar.style.transform = "scaleY(1)";
+        });
+      });
+    </script>
+
+    <!-- Animaciones y efectos en gráficos -->
+    <script>
+      // Mejorar gráfico de innovación con efectos
+      if (chartConfigs.innovationChart) {
+        chartConfigs.innovationChart.options.animation = {
+          duration: 1200,
+          easing: "easeOutBounce",
+        };
+        chartConfigs.innovationChart.options.plugins.tooltip = {
+          backgroundColor: "#1A237E",
+          titleColor: "#FFC107",
+          bodyColor: "#fff",
+          borderColor: "#FFC107",
+          borderWidth: 2,
+        };
+      }
+    </script>
+    <!-- Efectos animados en íconos del proceso -->
+    <style>
+      @keyframes fire-flicker {
+        0% {
+          filter: brightness(1.2) drop-shadow(0 0 4px #ff9800);
+        }
+        50% {
+          filter: brightness(1.6) drop-shadow(0 0 12px #ff9800);
+        }
+        100% {
+          filter: brightness(1.2) drop-shadow(0 0 4px #ff9800);
+        }
+      }
+      @keyframes cork-pop {
+        0% {
+          transform: translateY(0);
+        }
+        30% {
+          transform: translateY(-20px) rotate(-10deg);
+        }
+        60% {
+          transform: translateY(0) rotate(0deg);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+      @keyframes sun-spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes bubble {
+        0% {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: translateY(-10px) scale(1.1);
+          opacity: 0.7;
+        }
+        100% {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+      }
+      .fire-emoji {
+        animation: fire-flicker 1s infinite;
+      }
+      .cork-emoji {
+        animation: cork-pop 1.5s infinite;
+      }
+      .sun-emoji {
+        animation: sun-spin 4s linear infinite;
+      }
+      .bubble-emoji {
+        animation: bubble 2s infinite;
+      }
+    </style>
+    <script>
+      document.querySelectorAll(".flow-step").forEach((step, i) => {
+        const icon = step.querySelector("div");
+        if (icon && i === 2) icon.classList.add("fire-emoji"); // fuego
+        if (icon && i === 1) icon.classList.add("sun-emoji"); // sol
+        if (icon && i === 3) icon.classList.add("bubble-emoji"); // matraz
+        if (icon && i === 4) icon.classList.add("cork-emoji"); // botella
+      });
+    </script>
+    <!-- Animación de entrada para secciones -->
+    <style>
+      section,
+      header,
+      footer {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.8s, transform 0.8s;
+      }
+      section.visible,
+      header.visible,
+      footer.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        document
+          .querySelectorAll("section, header, footer")
+          .forEach((el, i) => {
+            setTimeout(() => el.classList.add("visible"), 200 + i * 200);
+          });
+      });
+    </script>
+    <!-- Animación de partículas de fondo -->
+    <style>
+      #particles-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+        pointer-events: none;
+      }
+    </style>
+    <canvas id="particles-bg"></canvas>
+    <script>
+      const canvas = document.getElementById("particles-bg");
+      const ctx = canvas.getContext("2d");
+      let particles = Array.from({ length: 40 }, () => ({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        r: Math.random() * 2 + 1,
+        d: Math.random() * 1 + 0.5,
+      }));
+      function drawParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#FFC10788";
+        particles.forEach((p) => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+          p.y += p.d;
+          if (p.y > window.innerHeight) {
+            p.y = 0;
+            p.x = Math.random() * window.innerWidth;
+          }
+        });
+        requestAnimationFrame(drawParticles);
+      }
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+      drawParticles();
+    </script>
+    <!-- Botón de descarga PDF (html2pdf.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+      document.getElementById("downloadPDF").addEventListener("click", () => {
+        html2pdf()
+          .from(document.querySelector("main"))
+          .save("Infografia_OcaDivina.pdf");
+      });
+    </script>
+    <!-- Accesibilidad total -->
+    <style>
+      :focus {
+        outline: 2px solid #ffc107 !important;
+        outline-offset: 2px;
+      }
+    </style>
+    <!-- Modo oscuro avanzado para gráficos -->
+    <script>
+      function updateChartsForDarkMode(isDark) {
+        Object.values(chartInstances).forEach((chart) => {
+          chart.options.plugins.legend.labels.color = isDark
+            ? "#FFC107"
+            : FONT_COLOR;
+          chart.options.plugins.tooltip.backgroundColor = isDark
+            ? "#23272f"
+            : "#fff";
+          chart.options.plugins.tooltip.titleColor = isDark
+            ? "#FFC107"
+            : "#1A237E";
+          chart.options.plugins.tooltip.bodyColor = isDark
+            ? "#FFC107"
+            : FONT_COLOR;
+          chart.options.scales &&
+            Object.values(chart.options.scales).forEach((scale) => {
+              scale.ticks.color = isDark ? "#FFC107" : FONT_COLOR;
+              scale.grid.color = isDark ? "#37474f" : BORDER_COLOR;
+            });
+          chart.update();
+        });
+      }
+      darkModeToggle.addEventListener("click", () => {
+        updateChartsForDarkMode(document.body.classList.contains("dark-mode"));
+      });
+      window.addEventListener("DOMContentLoaded", () => {
+        updateChartsForDarkMode(document.body.classList.contains("dark-mode"));
+      });
+    </script>
+  </body>
 </html>
